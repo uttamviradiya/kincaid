@@ -1,0 +1,117 @@
+<style>
+/*   .quick-view-main .quick-view-main-block .qv-select-variant-select{display:block;} */
+</style>
+
+<div class="quick-view-main quick-view-main2">
+  <div class="quick-view-main-wrapper">
+  </div>
+  <div class="quick-view-container">
+    <button class="qv-btn-close">
+      {% render 'close-icon' %}
+    </button>
+    <div class="quick-view-main-block">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="product-media-single">
+            <div class="product-media-slider-single">
+            </div>
+          </div>
+          <div class="product-media-multi">
+            <div class="product-media-slider-multi">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <a href="" class="pro-title"></a>
+          {% if settings.recently_sold == true %}
+          <p class="sell-info">
+            {% assign min = 5 %}
+            {% assign max = 15 %}
+            {% assign diff = max | minus: min %}
+            {% assign random1 = "now" | date: "%N" | modulo: diff | plus: min %}
+            {% assign min = 5 %}
+            {% assign max = 35 %}
+            {% assign diff = max | minus: min %}
+            {% assign random2 = "now" | date: "%N" | modulo: diff | plus: min %}
+            {{ random1 }} Sold in last {{ random2 }} Hours
+          </p>
+          {% endif %}
+          <table class="product-info-table">
+            {% if settings.quick_vendor == true and product.vendor != blank %}
+            <tr>
+              <td>Brand:</td>
+              <td>{{ product.vendor }}</td>
+            </tr>
+            {% endif %}
+
+            {% if settings.quick_sku == true  %}
+            <tr class="tr-product-sku">
+              <td>Product Code:</td>
+              <td class="product-sku">{{ product.sku }}</td>
+            </tr>
+            {% endif %}
+            {% if settings.quick_avail == true %}
+            <tr>
+              <td>Availability:</td>
+              <td class="product-quantity">{{ product.inventory_quantity }}</td>
+            </tr>
+            {% endif %}
+          </table>
+          <h5 class="qv-pro-price"></h5>
+          {% if settings.quick_desc == true %}
+          <div class="pro-desc"></div>
+          {% endif %}
+          {% assign c = settings.colorcode | split:"||" %}
+
+          <div class="qv-pro-options" data-color='[ {%- for cc in c -%}
+                                                  {%- assign last = forloop.length -%}
+                                                  {%- assign c1 = cc | split:"|" -%}
+                                                  {"color":"{{-c1[0] | downcase -}}","code":"{{-c1[1]-}}"{%- if forloop.index != last -%}},{%- else -%}}{%- endif -%}{%- endfor -%} ]'>
+          </div>
+          <!-- product form -->
+          <form  method="post" class="qv-product-form" id="qv-a2c">
+            <select class="qv-select-variant-select" name="id">
+            </select>
+            <div class="qv-form-control {% if settings.quick_q != true %} display-none {% endif %}">
+              <div class="pro-attr-block">
+                <h6 class="pro-attr">
+                  Quantity:
+                </h6>
+              </div>
+              <div class="qv-q-selector">
+                <button class="qv-minus qv-q-btn"></button>
+                <input type="number" class="qv-q" name="quantity"  min=1 inputmode="numeric" pattern="[0-9]*" value=1>
+                <button class="qv-plus qv-q-btn"></button>
+              </div>
+            </div>
+            <div class="qv-form-control {% if settings.quick_q != true %} display-none {% endif %}">
+              <div class="pro-attr-block subtotal-block">
+                <h6 class="pro-attr">
+                  Sub Total:
+                </h6>
+                <span class="qv-subtotal"></span>
+              </div>
+            </div>
+            <div class="qv-form-control">
+              <input type="button" name="add" value="ADD TO CART" class="btn btn--purchase  qv-pro-a2c" >
+            </div>
+          </form>
+          {% if settings.quick_customer == true %}
+          <div class="pro-attr-block">
+            <h6 class="pro-attr">
+              {% render 'icon-eye' %}
+            </h6>
+            <span class="qv-option2">
+              {% assign min = 100 %}
+              {% assign max = 350 %}
+              {% assign diff = max | minus: min %}
+              {% assign random1 = "now" | date: "%N" | modulo: diff | plus: min %}                          
+              {{ random1 }}  customers are viewing this product
+            </span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+
+
+<style>
+   {% if section.settings.code_hover_over == true %}
+  .discount-section .discount-main .discount-block .discount-head{ background:linear-gradient(180deg, #ffffff00 50%, {{ section.settings.codecolor1 }} 50%)  }
+  .discount-section .discount-main .discount-block .discount-head.hover-over1 {  background:linear-gradient(180deg, #ffffff00 50%, {{ section.settings.codecolor2 }} 50%)  }
+  {% endif %}
+  
+  {% if section.settings.btn_hover_over == true %}
+  .discount-section .discount-main .discount-block .dis-code-btn { background:{{ section.settings.btncolor1 }}; }
+  .discount-section .discount-main .discount-block .dis-code-btn.code-btn-hover { background:{{ section.settings.btncolor2 }}; }
+  {% endif %}
+</style>
+
+
+{% for block in section.blocks %}
+{% if forloop.length >= 1 %}
+<section class="discount-section mb50" id="discount-section-{{ section.id }}">
+  <div class="container">
+    <div class="discount-main" id="dm">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% if block.settings.head != blank or block.settings.info != blank %}
+        <div class="col-sm-6 col-lg-3">
+          <div class="discount-block">
+            {% if block.settings.head != blank %} 
+            <h2 class="discount-head">
+              {{ block.settings.head }}
+            </h2>
+            {% endif %}
+            {% if block.settings.info != blank %} 
+            <div class="discount-info">
+              {{ block.settings.info }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {%  endif%}
+        {% endfor %}
+        
+        {% if section.settings.code != blank %}
+         <div class="col-sm-6 col-lg-3">
+            <div class="discount-block">
+           <button class="dis-code-btn btn" id="myInput" title="Click to Copy Code">
+             {{ section.settings.code }}
+           </button>
+           </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% break %}
+{% endfor %}
+
+
+{{ 'theme.js' | asset_url | script_tag }}
+{{ 'jquery-ui.js' | asset_url | script_tag }}
+<script>
+  $(document).ready(function() {  
+ 
+    {% if section.settings.btn_hover_over == true %}
+    setInterval(function() {
+      $('.dis-code-btn').addClass("code-btn-hover");
+      setTimeout(function(){
+        $('.dis-code-btn').removeClass("code-btn-hover");
+      },1000);
+    },2000);
+    {% endif %}
+    {% if section.settings.code_hover_over == true %}
+    setInterval(function() {
+      $('.discount-head').addClass("hover-over1");
+      setTimeout(function(){
+                 $('.discount-head').removeClass("hover-over1");
+      },1000);
+    }, 2000);
+    {% endif %}
+  });
+</script>
+
+{% schema %}
+{
+    "name": "Discount",
+    "settings": [
+        {
+            "type":"text",
+            "id":"code",
+            "label":"Name",
+            "default":"CODE: DISCOUNT"
+        },
+        {
+            "type":"url",
+            "id":"dis_url",
+            "label":"Url"
+        },
+{
+            "type":"checkbox",
+            "id":"btn_hover_over",
+            "label":"Button Hover Over",
+			"default":true
+        },
+{
+            "type":"color",
+            "id":"btncolor1",
+            "label":"Button First Color",
+			"default":"#ed4649"
+        },
+{
+            "type":"color",
+            "id":"btncolor2",
+            "label":"Button Second Color",
+			"default":"#000000"
+        },
+{
+            "type":"checkbox",
+            "id":"code_hover_over",
+            "label":"Code Heading Hover Over",
+			"default":true
+        },
+{
+            "type":"color",
+            "id":"codecolor1",
+            "label":"Heading First Color",
+			"default":"#ed4649"
+        },
+{
+            "type":"color",
+            "id":"codecolor2",
+            "label":"Heading Second Color",
+			"default":"#ffc7c8"
+        }
+    ],
+    "max_blocks":3,
+    "blocks":[
+        {
+            "type":"text",
+            "name":"Discount Code",
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"head",
+                    "label":"Heading",
+                    "default":"GET 00% OFF"
+                },
+                {
+                    "type":"richtext",
+                    "id":"info",
+                    "label":"Info",
+                    "default":"<p>ON ORDERS OVER $00</p>"
+                }
+            ]
+        }
+    ],
+    "presets": [{
+        "name": "Discount"
+    }]
+}
+{% endschema %}
+

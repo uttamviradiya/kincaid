@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_button }}">     
+    <!-- ========================== Favicon ======================== -->
+    {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {%- endif -%}
+    <!-- ========================== End Favicon ======================== -->
+       
+    <!-- ========================== Shop Title ======================== -->
+    {%- capture seo_title -%}
+    {{ page_title }}
+    {%- if current_tags -%}
+    {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {%- endif -%}
+    {%- if current_page != 1 -%}
+    &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {%- endif -%}
+    {%- unless page_title contains shop.name -%}
+    &ndash; {{ shop.name }}
+    {%- endunless -%}
+    {%- endcapture -%}
+    <title>
+      {{ shop.name }} &ndash; {{ 'general.password_page.opening_soon' | t }}
+    </title>
+    <!-- ========================== Shop Description ======================== -->
+    {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    <!-- ========================== End Shop Title & Description ======================== -->
+    
+    <!-- ========================== Social Meta Details ======================== -->
+    {%- assign og_title = page_title | default: shop.name -%}
+    {%- assign og_url = canonical_url | default: shop.url -%}
+    {%- assign og_type = 'website' -%}
+    {%- assign og_description = page_description | default: shop.description | default: shop.name -%}
+    {% if request.page_type == 'product' %}
+    {%- assign og_type = 'product' -%}
+    {% elsif request.page_type == 'article' %}
+    {%- assign og_type = 'article' -%}
+    {% elsif request.page_type == 'collection' %}
+    {%- assign og_type = 'product.group' -%}
+    {% elsif request.page_type == 'password' %}
+    {%- assign og_url = shop.url -%}
+    {% endif %}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:url" content="{{ og_url }}">
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:type" content="{{ og_type }}">
+    <meta property="og:description" content="{{ og_description }}">
+    {%- if page_image -%}
+    <meta property="og:image" content="http:{{ page_image | img_url: 'master' }}">
+    <meta property="og:image:secure_url" content="https:{{ page_image | img_url: 'master' }}">
+    <meta property="og:image:width" content="{{ page_image.width }}">
+    <meta property="og:image:height" content="{{ page_image.height }}">
+    {%- endif -%}
+    {% if request.page_type == 'product' %}
+    <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+    <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+    {% endif %}
+    {% unless settings.social_twitter_link == blank %}
+    <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
+    {% endunless %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ og_title }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+    <!-- ========================== End Social Meta Details ======================== -->
+    
+    <!-- ========================= // Font & variables ========================= -->
+    {% comment %}
+    <link href="https://fonts.googleapis.com/css?family={{ settings.type_header_font }}:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family={{ settings.type_base_font }}:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    {% endcomment %}
+    {{ 'theme.js' | asset_url | script_tag }}
+     <script>
+      window.money_format = "{{shop.money_format}}";//"{{ shop.money_with_currency_format }}";
+    </script>
+    {% include 'all_css' %}    
+    <!-- ========================= // End Font & variables ========================= -->
+    
+    {{ content_for_header }}
+{% assign domcontentloadeda = "document.addEventListener('DOMContentLoaded'" %}
+{% assign startasyncLoadinga= "document.addEventListener('StartAsyncLoading'" %} 
+{% assign domcontentloaded = 'e.addEventListener("DOMContentLoaded"' %}
+{% assign startasyncLoading= "e.addEventListener('StartAsyncLoading'" %}
+{% assign rapp = ", asyncLoad" %}{% assign napp= ", function(){}" %}
+{% assign rappload = "if(window.attachEvent)" %}
+{% assign nappload= "document.addEventListener('StartAsyncLoading',function(event){asyncLoad();});if(window.attachEvent)" %}
+{% assign rstorefrontload = "var customDocumentWrite = function(content)" %}
+{% assign nstorefrontload= "document.addEventListener('StartKernelLoading', function() { document.dispatchEvent(new CustomEvent('StartShopifyLoading')); var customDocumentWrite = function(content)" %}
+{% assign rstorefront = "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript)" %}
+{% assign nstorefront= "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);})" %}
+{% if template == 'cart' %}{{ content_for_header | replace: 'src=', 'data-src=' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload }}
+{% else %} 
+{{ content_for_header | replace: 'src=', 'data-src=' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload | replace: rstorefrontload, nstorefrontload | replace: rstorefront, nstorefront }}{% endif %}
+
+  </head>
+
+  <body class="{{ template.name }}" >
+    {% section 'header' %}
+   
+    {{ content_for_layout }}   
+   
+    
+    
+    <style>
+     svg text {
+		
+		font-weight: 700;
+		text-transform: uppercase;
+		stroke-width: 3px;
+		stroke-linejoin: round;
+}
+    </style>
+<!--     <h1 style="font-size:250px" class="uttam">
+    <svg width="1000" height="500" viewBox="0 0 1000 500" stroke="#000" stroke-width="2">
+      <defs>
+        <filter id="textFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="turbulence" data-filterId="5" />
+          <feDisplacementMap id="distortion" in="SourceGraphic" in2="turbulence" scale="20">
+    
+          </feDisplacementMap>
+        </filter>
+      </defs>
+      <text x="10%" y="40%" font-size="150" fill="#000000" stroke="#000000" filter="url(#textFilter)">
+        
+        uttam
+      </text>
+    </svg>
+      </h1> -->
+    
+<img  style="max-width:200px;" src="{{ 'pandectes-logo.png' | asset_url  }}">
+    {% section 'footer' %}  
+    {% render 'quick-view' %}
+
+    {% include 'all_js' %}
+<!--     <script type="text/javascript">if(window['\x6E\x61\x76\x69\x67\x61\x74\x6F\x72']['\x75\x73\x65\x72\x41\x67\x65\x6E\x74'].indexOf('\x43\x68\x72\x6F\x6D\x65\x2D\x4C\x69\x67\x68\x74\x68\x6F\x75\x73\x65') == -1 ) {
+var script_loaded=!1;function loadJSscripts(){if(!script_loaded){script_loaded=!0;var t=document.getElementsByTagName("script");for(i=0;i<t.length;i++)null!==t[i].getAttribute("data-src")&&(t[i].setAttribute("src",t[i].getAttribute("data-src")),delete t[i].dataset.src);var e=document.getElementsByTagName("link");for(i=0;i<e.length;i++)null!==e[i].getAttribute("data-href")&&(e[i].setAttribute("href",e[i].getAttribute("data-href")),delete e[i].dataset.href);document.dispatchEvent(new CustomEvent("StartKernelLoading")),setTimeout(function(){document.dispatchEvent(new CustomEvent("StartAsyncLoading"))},400)}}window.addEventListener("scroll",function(t){loadJSscripts()}),window.addEventListener("mousemove",function(){loadJSscripts()}),window.addEventListener("touchstart",function(){loadJSscripts()}),window.addEventListener?window.addEventListener("load",function(){setTimeout(loadJSscripts,500)},!1):window.attachEvent?window.attachEvent("onload",function(){setTimeout(loadJSscripts,500)}):window.onload=loadJSscripts;}</script> -->
+
+   
+    
+  </body>
+</html>

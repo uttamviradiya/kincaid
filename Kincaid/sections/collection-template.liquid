@@ -1,0 +1,254 @@
+<style>
+  .main-wrapper.filter_enable-false .main-filter-block-wrapper{display:none;}
+  .main-wrapper.main-filter-wrapper-horizontal{display:block;}
+  .main-wrapper.main-filter-wrapper-horizontal .product-grid-wrapper {width:100%;max-width:1425px;margin:0 auto;}
+  
+  .main-wrapper .product-grid-wrapper.filter_enable-false{max-width:1425px;width:100%;margin:0 auto;}
+  
+  .main-wrapper.main-wrapper-filter-horizontal{display:block;max-width:1425px;margin:0 auto;}
+  .main-wrapper.main-wrapper-filter-horizontal .main-filter-block-wrapper{width:100%;}
+  .main-wrapper.main-wrapper-filter-horizontal .filter-main-block ul{flex-direction:row;max-width:1000px;}
+  .main-wrapper.main-wrapper-filter-horizontal .main-filter-block-wrapper form{display: flex;flex-direction: column-reverse;}
+  .main-wrapper.main-wrapper-filter-horizontal .main-filter-block-wrapper form ul.filter-selector{display:none}
+  
+  .main-wrapper .main-filter-block-wrapper form .filter-grp-head svg{display:none;}
+  .main-wrapper.main-wrapper-filter-horizontal .main-filter-block-wrapper form .filter-grp-head svg{display:block;}
+  
+  
+  .main-wrapper.main-wrapper-filter-horizontal ..main-wrapper .product-grid-wrapper{width:100%;}
+  
+  .main-wrapper .product-grid-wrapper .load-more-block{padding: 15px;background: #8080801c;border-radius: 5px;text-align:center;margin:25px 0;}
+  .main-wrapper .product-grid-wrapper .load-more-block button{border: none;background: black;color: white;padding: 10px 15px;border-radius: 5px;}
+  .main-wrapper .product-grid-wrapper .load-more-block button:disabled{opacity:0.5;}
+  
+</style>
+
+
+{% paginate collection.products by 18 %}
+<div data-section-id="{{ section.id }}" data-section-type="collection-template">
+  <header class="collection-header">
+    {% if section.settings.show_collection_image and collection.image %}
+    <figure>
+      <img src="{{ collection.image | img_url }}" alt="collection Image">
+      <figcaption>{{ collection.title }}</figcaption>      
+    </figure>    
+    {% if collection.description != blank %}
+    <div class="collection-description">
+      {{ collection.description }}
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="page-width">
+      <div class="section-header text-center">
+        {% if collection.description != blank %}
+        <div>{{ collection.description }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+	
+    {% comment %}
+    {% if section.settings.tags_enable and collection.all_tags.size > 0 or section.settings.sort_enable %}
+    <div class="filters-toolbar-wrapper">
+      <div class="container">
+        <div class="filters-toolbar">
+          <div class="filters-toolbar__item-wrapper">
+            {% if section.settings.tags_enable %}
+            {% unless collection.all_tags.size == 0 %}
+            <div class="filters-toolbar__item-child">
+              <label class="filters-toolbar__label select-label" for="FilterTags">{{ 'collections.filters.title_tags' | t }}</label>
+              <div class="filters-toolbar__input-wrapper select-group">
+                <select class="filters-toolbar__input" name="FilterTags" id="FilterTags" data-select-input>
+                  <option value="{{ collection.url }}">{{ 'collections.filters.all_tags' | t }}</option>
+                  {% for tag in collection.all_tags %}
+                  {%- assign new_url = tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                  <option value="{{ new_url }}"{% if current_tags contains tag %} selected="selected"{% endif %}>{{ tag }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            {% endunless %}
+            {% endif %}
+            {% if section.settings.sort_enable %}
+            <div class="filters-toolbar__item-child">
+              {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+              <label class="filters-toolbar__label select-label" for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+              <div class="filters-toolbar__input-wrapper select-group">
+                <select name="sort_by" id="SortBy" class="filters-toolbar__input hidden" data-default-sortby="{{ collection.default_sort_by }}" data-select-input>
+                  {%- for option in collection.sort_options -%}
+                  <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name | capitalize }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          <div class="filters-toolbar__item filters-toolbar__item--count">
+            <span class="filters-toolbar__product-count">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endcomment %}
+  </header>
+
+  <div class="container" id="Collection">
+
+    <div class="main-wrapper {% unless section.settings.filter_enable %}filter_enable-false{% endunless %} main-wrapper-filter-{{ section.settings.filter_type }}">
+      {% if section.settings.filter_enable or section.settings.sort_enable %}
+      <div class="main-filter-block-wrapper filter-wrapper-{{ section.settings.filter_type }}">
+        {% render 'filter',results: collection,filter_type:section.settings.filter_type,filter_enable:section.settings.filter_enable,sort_enable:section.settings.sort_enable %}
+      </div>
+      {% endif %}
+      <div class="product-grid-wrapper {% unless section.settings.filter_enable %}filter_enable-false{% endunless %}">
+        
+        {% if section.settings.sort_enable and section.settings.filter_type == 'vertical' %}
+        <div class="product-grid-function-top">
+          
+          <p class="main-result-counter">{{ collection.products_count }} Products</p>
+          {% if section.settings.sort_enable %}
+          <div class="main-sort-by">
+            <p class="filter-sort_by-head">
+              Sort By
+
+            </p>
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <select name="sort_by" id="sort-SortBy" class="filters-toolbar__input hidden"  data-select-input>
+              {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name | escape }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="product-grid-wrapper-list">
+          <div class="row">
+            {% for product in collection.products %}
+            <div class="col-3">
+              {% include 'product-card' %}
+            </div>      
+            {% else %}
+            {%- assign is_empty_collection = true -%}
+            {% endfor %}
+          </div>
+
+
+          {% if is_empty_collection %}
+          <div class="row">
+            <div class="col-12"><p class="text-center">{{ 'collections.general.no_matches' | t }}</p></div>
+          </div>
+          {% endif %}
+        </div>
+
+        
+        <ul class="load-more-block">
+         
+          <li aria-hidden="true">
+            <button data-url="{{ paginate.next.url }}"  {% unless paginate.next.is_link %}disabled {% endunless %}>Load More</button>
+          </li>
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}
+
+
+<script>
+  // infinite scroll
+    let temp = 0;
+    $(window).scroll(function(){
+    	let a = isScrolledIntoView($(".load-more-block button"));
+      console.log("a = " +a );
+      if(a == true)
+      {
+        if(temp == 0)
+        {
+          $(".load-more-block button").trigger("click");
+          temp = 1;
+        }
+      }
+      else{
+      	temp = 0;
+      }
+    });
+    function isScrolledIntoView(elem)
+    {
+      var docViewTop = $(window).scrollTop();
+      var docViewBottom = docViewTop + $(window).height();
+
+      var elemTop = $(elem).offset().top;
+      var elemBottom = elemTop + $(elem).height();
+
+      return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+  
+  
+  
+  $(document).ready(function(){
+    $(document).on("click",".load-more-block button",function(){
+//       alert($(this).data("url"));
+      path = $(this).data("url");
+      $.ajax({
+        type: "GET",
+        url: path,
+        success: function(res) {
+          console.log(res);
+          $(".main-wrapper .product-grid-wrapper .product-grid-wrapper-list>.row").append($(res).find(".main-wrapper .product-grid-wrapper .product-grid-wrapper-list>.row").html());
+          $(".main-wrapper .product-grid-wrapper .load-more-block").html($(res).find(".main-wrapper .product-grid-wrapper .load-more-block").html());
+          window.history.replaceState(null, null,path);
+
+        }
+      });
+    });
+  });
+</script>
+
+
+{% schema %}
+{
+"name": "Collection pages",
+"settings": [
+{
+	"type":"header",
+	"content":"FILTERING AND SORTING"
+},
+{
+"type": "checkbox",
+"id": "filter_enable",
+"label": "Enable Filtering",
+"default": true
+},
+{
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer (Default always in Mobile)"
+        }
+      ],
+      "default": "vertical",
+      "label": "Desktop Filter Layout"
+},
+{
+"type": "checkbox",
+"id": "sort_enable",
+"label": "Enable Sorting",
+"default": true
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,127 @@
+
+{% assign product = product %}
+<div class="product-card">
+  <div class="pro-img-block">
+    <figure>
+      <a class="figure-a" href="{{ product.url }}">
+        <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+        {% for img in product.images %}
+        {% if forloop.length == 1 %}
+        <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+        {% else %}
+        {% if forloop.index == 2 %}    
+        <img class="img2" src="{{ img | img_url:"master" }}">
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </a>
+      <figcaption>
+        {% capture color %}<p id="color"></p>{% endcapture %}
+        <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add" >Add to Cart</button>
+        <div class="pro-variant-block ">
+          <div class="close-block">
+            <button class="close">
+              {% render "close-icon" %}
+            </button>
+          </div>
+          <div class="variant-block">
+            <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+              {% for option in product.options_with_values %}
+
+              <div class="variant-selector {{ option.name | downcase }}" data-option={{ option.name }} data-index="{{ forloop.index0 }}" >
+
+                <p class="selected-var">
+                  {{ option.name }} :
+                </p>
+                <div class="variant-list"> 
+                  {% for value in option.values %}
+                  <label for="{{product.id}}-{{ value }}">{{ value }}</label>
+                  <input type="radio" id="{{product.id}}-{{ value }}" name="{{ product.id }}-{{ option.name }}" value="{{ value }}" data-option="{{ option.name }}">
+                  {% endfor %}
+                </div>
+              </div>  
+
+              {% endfor %}
+
+
+              <select class="select-variant-select" name="id">
+                {% for variant in product.variants %}
+                <option value="{{ variant.id }}" data-avail="{{ variant.available }}"
+                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                        >
+                  {{ variant.title }}
+                </option>
+                {% endfor %}
+              </select>
+              <input type="hidden" class="q" name="quantity" value="1">
+              <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+            </form>
+          </div>
+        </div>
+      </figcaption>
+      <div class="pro-link-top">
+
+        <div class="pro-wishlist">
+          <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+            {% render 'wishlist-icon' %}
+          </a>
+        </div>
+
+        <div class="pro-quick-view">
+          <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View" data-handle="{{ product.handle }}" data-variants='[ {%- for variant in product.variants -%}
+                                                                                                                                    {%- assign last = forloop.length -%}
+                                                                                                                                    {"id":"{{-variant.id-}}","quantity":"{{-variant.inventory_quantity-}}"{%- if forloop.index != last -%}},{%- else -%}}{%- endif -%}{%- endfor -%} ]'>
+            {%  render 'icon-eye' %}
+          </a>  
+        </div>
+      </div>
+    </figure>
+  </div>
+  <div class="pro-info-block">
+
+    <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+      {{ product.vendor }}
+    </a>
+    <a href="" class="pro-title" >
+      {{ product.title }}
+    </a>
+    <h6 class="pro-price">
+      {% if product.compare_at_price != blank %}
+      <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+      {% endif %}
+      <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+    </h6>
+    <div class="pro-variant">
+      {% assign color = settings.colorcode | split:"||" %}
+
+      {%- for option in product.options_with_values -%}
+      {% if option.name == 'Color' or option.name == "Colour" %}
+      {%- for value in option.values -%}
+      <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+             name="{{ option.name }}"
+             value="{{ value | escape }}"
+             form="{{ product_form_id }}"
+             {% if forloop.first %}checked="checked"{% endif %}
+             >
+      {% assign temp = 0 %}
+      {% for c in color %}
+      {% assign clr = c | split:"|" %}
+
+      {% if clr[0] == value %}
+      <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ clr[1] }};" data-value="{{ value }}" data-handle="{{ product.handle }}">
+        <div class="tooltip1">{{ value | capitalize }}</div>
+      </label>
+      {% assign temp = 1 %}
+      {% endif %}
+      {% endfor %}
+      {% if temp == 0 %}
+      <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value }}" data-handle="{{ product.handle }}">
+        <div class="tooltip1">{{ value | capitalize }}</div>
+      </label>
+      {% endif %}
+      {%- endfor -%}
+      {% endif %}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>

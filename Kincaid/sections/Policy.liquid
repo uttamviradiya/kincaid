@@ -1,0 +1,84 @@
+<style>
+
+  .policy-section .policy-main { background:{{ section.settings.back1 }} ;}
+
+</style>
+
+{% for block in section.blocks %}
+{% if forloop.length > 0 %}
+<section class="policy-section">
+  <div class="container">
+    <div class="policy-main">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% if block.settings.head != blank and block.settings.text != blank %}
+        <div class="col-md-6">
+          <div class="policy-block">
+            <a href="{%- if block.settings.link != blank -%} {{- block.settings.link -}} {%- else -%}# {%- endif -%}">
+              {% if block.settings.head != blank %}
+              <h4 class="head">
+                {{ block.settings.head }}
+              </h4>
+              {% endif %}
+              {% if block.settings.text != blank %}
+              <div class="head-text">
+                {{ block.settings.text }}
+              </div>              
+              {% endif %}
+            </a>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+       
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% break %}
+{% endfor %}
+
+{% schema %}
+{
+    "name": "Policy",
+    "settings": [
+        {
+            "type": "color",
+            "id": "back1",
+            "label": "Backgorund",
+            "default": "#f9ede1"
+        }
+    ],
+    "blocks":[
+        {
+            "name":"Policies",
+            "type":"url",
+            "settings":[
+                {
+					"type":"url",
+                    "id":"link",
+                    "label":"Link"
+				},
+				{
+                    "type":"text",
+                    "id":"head",
+                    "label":"Heading"
+                },
+                {
+                    "type":"richtext",
+                    "id":"text",
+                    "label":"Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Policy"
+        }
+    ]
+}
+{% endschema %}
+

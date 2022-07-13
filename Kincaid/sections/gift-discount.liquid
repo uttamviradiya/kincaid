@@ -1,0 +1,115 @@
+<style>
+
+  .gift-discount-section .gift-discount-main { background:{{ section.settings.back1 }} ;}
+
+</style>
+
+
+{% for block in section.blocks %}
+{% if forloop.length > 0 and block.settings.head != blank %}
+<section class="gift-discount-section">
+  <div class="container">
+    <div class="gift-discount-main">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% if block.settings.head != blank %}
+        <div class="col-6 col-lg-4 col-xl-3">
+          <div class="gift-discount-block">
+            <a href="{%- if block.settings.link != blank -%} {{- block.settings.link -}}{%- else -%}#{%- endif -%}">
+              {% if block.settings.svg != 'none' %}
+              <span class="icon-block">
+                {% if  block.settings.svg == 'gift' %}
+                {% render 'gift-icon' %}
+                {% elsif   block.settings.svg == 'returnpolicy' %}
+                {% render 'returnpolicy-icon' %}
+                {% elsif  block.settings.svg == 'security' %}
+                {% render 'security-icon' %}
+                {% else %}
+                {% render 'discount-icon' %}
+                {% endif %}
+              </span>
+              {% endif %}
+              
+              <span>
+                {{ block.settings.head }}
+              </span>
+              
+            </a>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% break %}
+{% endfor %}
+
+
+{% schema %}
+{
+    "name": "Gift-Discount Information",
+    "settings":[
+		{
+            "type": "color",
+            "id": "back1",
+            "label": "Backgorund",
+            "default": "#f2f2f2"
+        }
+	],
+    "blocks": [
+        {
+            "name": "Gift/Discount",
+            "type": "text",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "svg",
+                    "label": "Icon",
+                    "options": [
+						{
+                            "value": "none",
+                            "label": "None"
+                        },                        
+						{
+                            "value": "gift",
+                            "label": "Gift"
+                        },
+                        {
+                            "value": "returnpolicy",
+                            "label": "Return Policy"
+                        },
+                        {
+                            "value": "security",
+                            "label": "Security"
+                        },
+                        {
+                            "value": "discount",
+                            "label": "Discount"
+                        }
+                    ]
+                    
+                },
+                {
+                    "type": "text",
+                    "id": "head",
+                    "label": "Heading"
+                },
+				{
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Gift-Discount Information"
+        }
+    ]
+}
+{% endschema %}
+

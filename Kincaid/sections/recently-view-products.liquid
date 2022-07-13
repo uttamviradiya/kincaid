@@ -1,0 +1,27 @@
+<style>
+      .recently-view-products{position: fixed;top: 50%;right: 5%;transform: translateY(-50%);z-index:1111;transition:0.5s;}
+
+</style>
+<section class="recently-view-products" id='recent-view-{{ section.id }}'>
+  {% comment %}
+  {% render 'recently-view' %}
+  {% endcomment %}
+  {% render 'recently-view2' %}
+</section>
+{% schema %}
+  {
+    "name": "Recently View",
+    "settings": [],
+	"presets":[
+{
+	"name":"Recently View"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

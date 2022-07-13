@@ -1,0 +1,64 @@
+<ul class="site-nav" id="SiteNav">
+  {% for link in linklists[linklist].links %}
+    {%- assign child_list_handle = link.title | handleize -%}
+    {%- assign three_level_nav = false -%}
+    {% if link.links != blank %}
+      {% if link.levels == 2 %}
+        {%- assign three_level_nav = true -%}
+      {% endif %}
+    {% endif %}
+
+    {% if link.links != blank %}
+      <li class="nav--has-dropdown {% if link.active %} nav--active{% endif %}" data-has-dropdowns>
+        <button class="nav_link site-nav_link--main nav_link-button {% if link.child_active %}link-active{% endif %}" type="button">
+          <span class="nav_label">{{ link.title | escape }}</span>
+        </button>
+        <div class="nav_dropdown {% if three_level_nav %}nav_dropdown-centered{% endif %}" id="SiteNavLabel-{{ child_list_handle }}">
+          {% if three_level_nav %}
+            <div class="nav_childlist">
+              <ul class="nav_childlist-grid">
+                {% if link.links != blank %}
+                  {% for childlink in link.links %}
+                    <li class="nav_childlist-item">
+                      <a href="{{ childlink.url }}" class="nav_link nav_child-link nav_child-link-parent">
+                        <span class="nav_label">{{ childlink.title | escape }}</span>
+                      </a>
+                      {% if childlink.links != blank %}
+                        <ul>
+                        {% for grandchildlink in childlink.links %}
+                          <li>
+                            <a href="{{ grandchildlink.url }}" class="nav_link nav_child-link">
+                              <span class="nav_label">{{ grandchildlink.title | escape }}</span>
+                            </a>
+                          </li>
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          {% else %}
+            <ul>
+              {% for childlink in link.links %}
+                <li>
+                  <a href="{{ childlink.url }}"
+                  class="nav_link nav_child-link">
+                    <span class="nav_label">{{ childlink.title | escape }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </li>
+    {% else %}
+      <li {% if link.active %} class="nav-active"{% endif %}>
+        <a href="{{ link.url }}" class="nav_link nav_link--main{% if link.active %} nav_link-active{% endif %}">
+          <span class="nav_label">{{ link.title | escape }}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

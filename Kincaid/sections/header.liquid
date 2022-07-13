@@ -1,0 +1,2161 @@
+<style>
+  header .header-top{ background:{{ section.settings.header_top }} } 
+
+</style>
+
+<header>
+  <div class="header-top">
+    <div class="header-top-left">
+      <div class="logo-top">
+
+        <figure>
+          <a href="/">
+            <img src=" {{ 'svg_1.png' | file_url }} ">
+          </a>
+        </figure>
+
+      </div>
+      {% for block in section.blocks %}
+      {% if block.settings.brand_logo != blank %}
+      <ul>
+        {% for block in section.blocks %}
+        {% if block.settings.brand_logo != blank %}
+        <li>
+          <a href="{{ block.settings.brand_link }}">
+            <figure>
+              <img src=" {{ block.settings.brand_logo | img_url }} ">
+            </figure>
+          </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+      </ul>
+      {% break %}
+      {% endif %}
+
+      {% endfor %}
+    </div>
+    <div class="header-top-right">
+      {% if section.settings.discount != blank and section.settings.discount_link != blank %}
+      <div class="discount">
+        <a href="{{ section.settings.discount_link }}">
+          {{ section.settings.discount }}
+        </a>
+      </div>
+      {% endif %}
+
+      <ul>
+        {% if section.settings.login == true %}
+        <li class="login login-click-popup" >
+          <a href="#">
+            {% render 'user-icon' %}
+          </a>
+        </li>
+        {% endif %}
+        {% if section.settings.wishlist == true %}
+        <li class="wishlist">
+          <a href="/pages/wishlist">
+
+            {% render 'wishlist-icon' %}
+            <span class="counter">
+              0
+            </span>
+          </a>
+        </li>
+        {% endif %}
+        {% if section.settings.cart == true %}
+        <li class="cart cart-popup">
+          <a href="#">
+            {% render 'cart-icon' %}
+            <span class="counter">
+              0
+            </span>
+          </a>
+        </li>
+        {% endif %}
+        {% if section.settings.help == true %}
+        <li class="help">
+          <a href="#">
+            {% render 'help-icon' %}
+          </a>
+        </li>
+        {% endif %}
+        {% if section.settings.language == true %}
+        <li class="language">
+          {% render 'earth-icon' %}
+          {% comment %}
+          {%  form 'localization'%}
+          <button>
+            {{ localization.language.endonym_name | capitalize }}
+            {{ localization.language.iso_code | capitalize }}
+            {% render 'caret-icon' %}
+          </button>
+          <ul>
+            {%- for language in localization.available_languages -%}
+            <li class="disclosure__item" tabindex="-1">
+              <a class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset" href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %} data-value="{{ language.iso_code }}">
+                {{ language.name | capitalize }}
+              </a>
+
+            </li>
+            {%- endfor -%}
+          </ul>
+          {% endform %}
+          {% endcomment %}
+
+        </li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="header-bottom-primary">
+    <div class="container">
+      <div class="header-bottom-main">
+        <div class="resp-ham-block">
+          <ul>
+            <li>
+              <button class="hamburger">
+                {% render 'hamburger' %}
+              </button>
+            </li>
+            {% if section.settings.search == true %}
+            <li>              
+              <button class="search" id="search">
+                {% render 'search-icon' %}
+              </button>
+              <button class="close" id="close-search">
+                {% render 'close-icon' %}
+              </button>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="logo-main">
+
+          <figure>
+            <a href="/">
+              <img src=" {{ 'svg_1.png' | file_url }} ">
+            </a>
+          </figure>
+
+        </div>
+        <div class="resp-right-block">
+          <ul>
+            {% if section.settings.login == true %}
+            <li class="login login-click-popup" >
+              <a href="#">
+                {% render 'user-icon' %}
+              </a>
+            </li>
+            {% endif %}
+
+            {% if section.settings.cart == true %}
+            <li class="cart cart-popup">
+              <a href="#" >
+                {% render 'cart-icon' %}
+                <span class="counter">
+                  0
+                </span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="header-primary">
+          {% if section.settings.menu != blank  %}
+
+          <div class="main-menu-block">          
+            <ul>
+             
+              {% for link in linklists[section.settings.menu].links %}
+              <li class="main-li">
+                <a href="#">
+                  {{ link.title }}
+                </a>
+				
+                {% for block in section.blocks %}
+                
+                {% if block.type == 'url' %}
+                {% if block.settings.menu_title == link.title %}
+
+                <ul class="dropdown-menu1">  
+                  
+                  {% for link1 in linklists[block.settings.menu1].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                
+                {% endif %}
+                {% elsif block.type == 'image_picker' %}
+                
+                {% elsif block.type == 'textarea' %}
+                {% elsif block.type == 'range' %}
+                {% elsif block.type == 'collection' %}
+                {% elsif block.type == 'html' %}
+
+                {% elsif block.type == 'number' %}
+                
+<!-- number -->
+
+              {% if block.settings.megapro == link.title %}
+
+<!--               <li class="main-li trend number">
+                <a href="#">
+                  {{ linklists[block.settings.trend].title }}
+                </a> -->
+                <div class="dropdown-product-menu">
+                  <ul class="dropdown-product-menu-ul">
+                    <li>
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          {% for link1 in linklists[block.settings.trend].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% if block.settings.leftmenu != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          {% if block.settings.leftmenu_title != blank %}
+                          <li class="left-menu-head">
+                            <a href="{{ block.settings.leftmenu_url }}">
+                              {{  block.settings.leftmenu_title }}
+                            </a>
+                          </li>
+                          {% else %}
+                          <li class="left-menu-head">
+                            <a href="{{ block.settings.leftmenu_url }}">
+                              {{  linklists[block.settings.leftmenu].title }}
+                            </a>
+                          </li>
+                          {% endif %}
+                          {% for link1 in linklists[block.settings.leftmenu].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+
+                    {% if block.settings.rightmenu != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          {% if block.settings.rightmenu_title != blank %}
+                          <li class="left-menu-head">
+                            <a href="{{ block.settings.rightmenu_url }}">
+                              {{  block.settings.rightmenu_title }}
+                            </a>
+                          </li>
+                          {% else %}
+                          <li class="left-menu-head">
+                            <a href="{{ block.settings.rightmenu_url }}">
+                              {{  linklists[block.settings.rightmenu].title }}
+                            </a>
+                          </li>
+                          {% endif %}
+                          {% for link1 in linklists[block.settings.rightmenu].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+                    {% if block.settings.img != blank %}
+                    <li>
+                      <div class="dropdown-product-menu-block">
+                        <figure>
+                          <a href="{{ block.settings.imglink }}">
+                            <img src="{{ block.settings.img | img_url:"400x400" }}">                      
+                          </a>
+                        </figure>
+                      </div>
+                    </li>
+                    {% endif %}
+                  </ul> 
+                  <ul class="dropdown-product-menu-product">
+                    
+                    {% if block.settings.megapro_product1 != blank %}
+                    <li>
+                      <figure>
+                        <a href="{{ block.settings.megapro_product1.url }}">
+                          <div class="product-img-block">
+                            {% for img in  block.settings.megapro_product1.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"150x200"  }}">
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </a>
+                        <figcaption>
+                          <a class="vendor" href="{{ block.settings.megapro_product1.vendor }}">
+                            {{ block.settings.megapro_product1.vendor }}
+                          </a>
+                          <a class="title" href="{{ block.settings.megapro_product1.url }}">
+                            {{ block.settings.megapro_product1.title }}
+                          </a>
+                          <p>
+                            <span class="compare-price">
+                              {{ block.settings.megapro_product1.compare_at_price | money_without_trailing_zeros }}
+                            </span><span class="original-price">
+                            {{ block.settings.megapro_product1.price | money_without_trailing_zeros }}
+                            </span>
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                    
+                    {% if block.settings.megapro_product2 != blank %}
+                    <li>
+                      <figure>
+                        <a href="{{ block.settings.megapro_product2.url }}">
+                          <div class="product-img-block">
+                            {% for img in  block.settings.megapro_product2.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"150x200"  }}">
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </a>
+                        <figcaption>
+                          <a class="vendor" href="{{ block.settings.megapro_product2.vendor }}">
+                            {{ block.settings.megapro_product2.vendor }}
+                          </a>
+                          <a class="title" href="{{ block.settings.megapro_product2.url }}">
+                            {{ block.settings.megapro_product2.title }}
+                          </a>
+                          <p>
+                            <span class="compare-price">
+                              {{ block.settings.megapro_product2.compare_at_price | money_without_trailing_zeros }}
+                            </span><span class="original-price">
+                            {{ block.settings.megapro_product2.price | money_without_trailing_zeros }}
+                            </span>
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                    
+                    {% if block.settings.megapro_product3 != blank %}
+                    <li>
+                      <figure>
+                        <a href="{{ block.settings.megapro_product3.url }}">
+                          <div class="product-img-block">
+                            {% for img in  block.settings.megapro_product3.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"150x200"  }}">
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </a>
+                        <figcaption>
+                          <a class="vendor" href="{{ block.settings.megapro_product3.vendor }}">
+                            {{ block.settings.megapro_product3.vendor }}
+                          </a>
+                          <a class="title" href="{{ block.settings.megapro_product3.url }}">
+                            {{ block.settings.megapro_product3.title }}
+                          </a>
+                          <p>
+                            <span class="compare-price">
+                              {{ block.settings.megapro_product3.compare_at_price | money_without_trailing_zeros }}
+                            </span><span class="original-price">
+                            {{ block.settings.megapro_product3.price | money_without_trailing_zeros }}
+                            </span>
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                    {% if block.settings.megapro_product4 != blank %}
+                    <li>
+                      <figure>
+                        <a href="{{ block.settings.megapro_product4.url }}">
+                          <div class="product-img-block">
+                            {% for img in  block.settings.megapro_product4.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"150x200"  }}">
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </a>
+                        <figcaption>
+                          <a class="vendor" href="{{ block.settings.megapro_product4.vendor }}">
+                            {{ block.settings.megapro_product4.vendor }}
+                          </a>
+                          <a class="title" href="{{ block.settings.megapro_product4.url }}">
+                            {{ block.settings.megapro_product4.title }}
+                          </a>
+                          <p>
+                            <span class="compare-price">
+                              {{ block.settings.megapro_product4.compare_at_price | money_without_trailing_zeros }}
+                            </span><span class="original-price">
+                            {{ block.settings.megapro_product4.price | money_without_trailing_zeros }}
+                            </span>
+                          </p>
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                    
+                  </ul>
+                </div>
+<!--               </li> -->
+              {% endif %}
+                
+                
+                {% else %}	
+                
+                {% for  childlink in link.links %}
+                {% if forloop.length >= 1 %}
+                <ul class="main-dropdown-menu1" >  
+                  {% for childlink in link.links %}
+                  <li>
+                    <a href="{{ childlink.url }}">
+                      {{ childlink.title }}
+                    </a>
+
+                    {% for  grand in childlink.links %}
+                    {% if forloop.length >= 1 %}
+                    <ul class="main-dropdown-submenu1" >  
+                      {% for  grand in childlink.links %}
+                      <li>
+                        <a href="{{ grand.url }}">
+                          {{ grand.title }}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% break %}
+                    {% endfor %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                {% endfor %}
+
+                {% endif %}
+                
+                {% endfor %}
+                
+                
+                
+                {% comment %}
+                {% for  childlink in link.links %}
+                {% if forloop.length >= 1 %}
+                <ul class="main-dropdown-menu1" >  
+                  {% for childlink in link.links %}
+                  <li>
+                    <a href="{{ childlink.url }}">
+                      {{ childlink.title }}
+                    </a>
+
+                    {% for  grand in childlink.links %}
+                    {% if forloop.length >= 1 %}
+                    <ul class="main-dropdown-submenu1" >  
+                      {% for  grand in childlink.links %}
+                      <li>
+                        <a href="{{ grand.url }}">
+                          {{ grand.title }}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% break %}
+                    {% endfor %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                {% break %}
+                {% endfor %}
+                {% endcomment %}
+
+              </li>
+              {% endfor %}
+
+
+<!--  New In    -->
+              {% for block in section.blocks %}
+              {% if block.type == 'textarea' %}
+              <li class="main-li newin">
+                <a href="#">
+                  {{ linklists[block.settings.menu1].title }}
+                </a>
+                <div class="dropdown-product-menu dropdown-product-menu-with-collection">
+                  <ul class="dropdown-product-menu-ul">
+                    <li>
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          {% for link1 in linklists[block.settings.menu1].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% if block.settings.menu2 != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          <li class="left-menu-head">
+                            <a href="  {{  linklists[block.settings.menu2].url }}">
+                              {{  linklists[block.settings.menu2].title }}
+                            </a>
+                          </li>
+                          {% for link1 in linklists[block.settings.menu2].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+
+                    {% if block.settings.menu3 != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          <li class="left-menu-head">
+                            <a href="  {{  linklists[block.settings.menu3].url }}">
+                              {{  linklists[block.settings.menu3].title }}
+                            </a>
+                          </li>
+                          {% for link1 in linklists[block.settings.menu3].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+
+                    {% if block.settings.menu4 != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          <li class="left-menu-head">
+                            <a href="  {{  linklists[block.settings.menu3].url }}">
+                              {{  linklists[block.settings.menu3].title }}
+                            </a>
+                          </li>
+                          {% for link1 in linklists[block.settings.menu3].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+
+                    {% if block.settings.menu5 != blank %}    
+                    <li class="left-menu">
+                      <div class="dropdown-product-menu-block">
+                        <ul>
+                          <li class="left-menu-head">
+                            <a href="  {{  linklists[block.settings.menu3].url }}">
+                              {{  linklists[block.settings.menu3].title }}
+                            </a>
+                          </li>
+                          {% for link1 in linklists[block.settings.menu3].links %}
+                          <li>
+                            <a href="{{ link1.url }}">
+                              {{ link1.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% endif %}
+
+                  </ul>
+
+                  <ul class="dropdown-product-menu-collection">
+                    {% if block.settings.collection1 != blank %}
+                    <li>
+                      <figure>
+                        <div class="collection-img-block">
+                          <a href="{{ block.settings.collection1.url }}">
+                           {% if block.settings.collection1.image != blank %}
+                            <img src="{{ block.settings.collection1.image | img_url:"1920x1920"  }}">
+                            {% else %}
+                            {% for product in block.settings.collection1.products %}
+                            {% if forloop.first and product.images %}
+                            {% for img in product.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"1920x1920"  }}">
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                          </a>
+                        </div>
+
+                        <figcaption>
+                          <a class="title" href="{{ block.settings.collection1.url }}">
+                            {{ block.settings.collection1.title }}
+                          </a>
+                          {% if block.settings.collection1_label != blank %}
+                          <h5>
+                            {{ block.settings.collection1_label }}
+                          </h5>
+                          {% endif %}
+
+                          {% if block.settings.shopnow_text != blank %}
+                          <a class="shopnow" href="{{ block.settings.collection1.url }}">
+                            {{ block.settings.shopnow_text }}
+                          </a>
+
+                          {% endif %}
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                      {% if block.settings.collection2 != blank %}
+                    <li>
+                      <figure>
+                        <div class="collection-img-block">
+                          <a href="{{ block.settings.collection2.url }}">
+                            
+                            {% if block.settings.collection2.image != blank %}
+                            <img src="{{ block.settings.collection2.image | img_url:"1920x1920"  }}">
+                            {% else %}
+                            {% for product in block.settings.collection2.products %}
+                            {% if forloop.first and product.images %}
+                            {% for img in product.images %}
+                            {% if forloop.first %}
+                            <img src="{{ img | img_url:"1920x1920"  }}">
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                          </a>
+                        </div>
+
+                        <figcaption>
+                          <a class="title" href="{{ block.settings.collection2.url }}">
+                            {{ block.settings.collection2.title }}
+                          </a>
+                          {% if block.settings.collection2_label != blank %}
+                          <h5>
+                            {{ block.settings.collection2_label }}
+                          </h5>
+                          {% endif %}
+
+                          {% if block.settings.shopnow_text != blank %}
+                          <a class="shopnow" href="{{ block.settings.collection2.url }}">
+                            {{ block.settings.shopnow_text }}
+                          </a>
+
+                          {% endif %}
+                        </figcaption>
+                      </figure>
+                    </li>
+                    {% endif %}
+                    
+                    {% if block.settings.alphabet == true %}
+                    <li class="alpha-block">
+                      {% if block.settings.alpha_head != blank %}
+                      <h6>
+                        {{ block.settings.alpha_head }}
+                      </h6>
+                      {% endif %}
+                      <ul>
+                        {% assign letters = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" | split: ' ' %}  
+                        {% for letter in letters %}
+                        <li class="{%- for collection in collections -%}
+                                   {%- assign temp = false -%}
+                                   {%- for vendor in collection.all_vendors  -%}
+                                   {%- assign ven = vendor | upcase | slice:0  -%}
+                                   {%- if ven == letter  -%}
+                                   vendor-found
+                                   {%- assign temp = true -%}
+                                   {% break %}
+                                   {%- endif -%}
+                                   {%- endfor -%}
+                                   {%- if temp == true -%}
+                                   {%- break -%}
+                                   {%- endif -%}
+                                   {%- endfor -%}
+                                   ">   
+                          <a href="/pages/brands/{{ letter }}">
+                            {{ letter }}
+                          </a>
+                        </li>
+                        {% endfor %}   
+
+                        {% assign letters = "1 2 3 4 5 6 7 8 9 0" | split: ' ' %}  
+                        {% for letter in letters %}
+
+                        {%- for collection in collections -%}
+                        {%- assign temp = false -%}
+
+                        {%- for vendor in collection.all_vendors  -%}
+                        {%- assign ven = vendor | upcase | slice:0  -%}
+                        {%- if ven == letter  -%}
+                        <li class="vendor-found">   
+                          <a href="/pages/brands/{{ letter }}">
+                            1-9
+                          </a>
+                        </li>
+                        {%- assign temp = true -%}
+                        {% break %}
+                        {%- endif -%}
+
+                        {%- endfor -%}
+
+                        {%- if temp == true -%} 
+                        {%- break -%}
+                        {%- endif -%}
+
+                        {%- endfor -%}
+
+                        {%- if temp == true -%} 
+                        {%- break -%}
+                        {%- endif -%}
+
+                        {% endfor %}   
+
+                        {% if temp != true %}
+                        <li >   
+                          <a href="#">
+                            1-9
+                          </a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                      {% if block.settings.alpha_brand != blank %}
+                      <a class="all-brand" href="/pages/brands/">
+                        {{ block.settings.alpha_brand }}
+                      </a>
+                      {% endif %}
+   
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </li>
+              {% endif %}
+              {% endfor %}
+            
+
+<!-- new in end   -->
+              
+<!-- multiple collection   -->
+              {% for block in section.blocks  %}
+              {% if block.type == "range" and block.settings.title != blank %}
+                
+              <li class="main-li multi-collection">
+                <a href="#">
+					{{ block.settings.title }}
+                </a>
+                <div class="dropdown-product-menu dropdown-product-menu-multi-collection">
+                  <ul class="dropdown-product-menu-ul">
+                   {% for block in section.blocks %}
+                    {% if block.type == "collection" %}
+                    <li class="left-menu"> 
+						 {% if block.settings.img != blank or  block.settings.c != blank %}
+                      <figure class=" {% if block.settings.imgtop == false %}reverse{% endif %} ">
+                        {% if block.settings.img != blank %}
+                        <div class="collection-img">  
+                          <a href=" {{ block.settings.title_url }}">
+                          <img  src=" {{ block.settings.img | img_url:"700x700" }} " alt=" {{ block.settings.img.alt }} ">                
+                           </a>
+                        </div>
+                        {% endif %}
+                        {% if block.settings.c != blank %}
+                        <figcaption>
+                          <ul>
+                            {% if block.settings.title != blank and block.settings.title_url != blank %}
+                            <li class="heading-li left-menu-head">
+                              <a href="{{ block.settings.title_url }}">
+                                {{ block.settings.title }}
+                              </a>
+                            </li>
+                            {% endif %}
+
+                            {% for link in linklists[block.settings.c].links %}
+                            {% if forloop.index != 7 %}
+                            <li>
+                              <a href="{{ link.url }}">
+                                {{ link.title }}
+                              </a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                          </ul>
+                        </figcaption>
+                        {% endif %}
+                      </figure>
+                      {% endif %}
+                     
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              </li>
+              {% endif %}
+              {% endfor %}
+<!-- end multiple collection   -->
+              
+<!-- sale -->
+              {% for block in section.blocks %}
+              {% if block.type == "html" and block.settings.sale_linklist != blank  %}
+              
+              <li class="colored-li">
+                <a href="{{ block.settings.title_link }}">
+                  {% if block.settings.title != blank %}
+                  {{ block.settings.title }}
+                  {% else %}
+                  {{ linklists[block.settings.sale_linklist].title }}
+                  {% endif %}
+                </a>
+                {% if block.settings.title_badge != blank %}
+                <span> 
+                  {{ block.settings.title_badge }}
+                </span>
+                {% endif %}
+                
+                {% for  link in linklists[block.settings.sale_linklist].links %}
+                {% if forloop.length >= 1 %}
+                <ul class="main-dropdown-menu1" >  
+                  {% for link in linklists[block.settings.sale_linklist].links %}
+                  <li>
+                    <a href="{{ link.url }}">
+                      {{ link.title }}
+                    </a>
+
+                    {% for  child in link.links %}
+                    {% if forloop.length >= 1 %}
+                    <ul class="main-dropdown-submenu1" >  
+                      {% for  child in link.links %}
+                      <li>
+                        <a href="{{ child.url }}">
+                          {{ child.title }}
+                        </a>
+
+                        {% for  grand in child.links %}
+                    {% if forloop.length >= 1 %}
+                        <ul class="main-dropdown-submenu1-grand" >  
+                          {% for  grand in child.links %}
+                          <li>
+                            <a href="{{ grand.url }}">
+                              {{ grand.title }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                         {% break %}
+                        {% endfor %}
+
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% break %}
+                    {% endfor %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                {% break %}
+                {% endfor %}
+              </li>
+              {% endif %}
+              {% endfor %}
+<!-- end sale -->
+            </ul>
+          </div>        
+
+          {% endif %}
+          {% if section.settings.search == true %}
+          <div class="search-block" method="get">
+            <form action="{{ routes.search_url }}">
+              <input class="search" type="text" placeholder="SEARCH" name="q" value="{{ search.terms | escape }}">
+              <button type="submit" value="Search">
+                {% render 'search-icon' %}
+              </button>
+            </form>
+          </div>
+          {% endif %}
+          {% if section.settings.cart == true %}
+        <div class="cart cart-popup cart-block-sticky">
+          <a href="#">
+            {% render 'cart-icon' %}
+            <span class="counter">
+              0
+            </span>
+          </a>
+        </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- mobile search -->
+  <div class="mobile-search-main">
+    <div class="search-block">
+      <form action="{{ routes.search_url }}">
+        <input class="search" type="text" placeholder="SEARCH" name="q" value="{{ search.terms | escape }}">
+        <button type="submit" value="Search">
+          {% render 'search-icon' %}
+        </button>
+      </form>
+    </div>
+  </div>
+
+</header>
+
+<!-- mobile menu -->
+
+<div class="mobile-nav-main">
+  <div class=" nav-overlay ">
+  </div>
+  <div class="mobile-nav">
+    <div class="nav-top">
+      <button class="close">
+        {% render 'close-icon' %}
+      </button>
+      {% if section.settings.discount != blank and section.settings.discount_link != blank %}
+      <div class="discount">
+        <a href="{{ section.settings.discount_link }}">
+          {{ section.settings.discount }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    <nav class="nav-bar">
+      {% if section.settings.menu != blank %}
+      {% for link in linklists[section.settings.menu].links %}
+      {% if forloop.first and link.title != blank %}
+
+      <ul>
+        {% for link in linklists[section.settings.menu].links %}
+        <li class="main-li">
+          <a href="{{- link.url -}}">
+            {{ link.title }}
+          </a>
+
+          {% for  childlink in link.links %}
+          {% if forloop.length >= 1 %}
+          {% render 'angle-right' %}
+          <ul class="mob-dropdown-menu1" >  
+            <li class="main-li-head">
+              {% render 'angle-right' %}
+              <a href="#">
+                {{ link.title }}
+              </a>
+            </li>
+            {% for childlink in link.links %}
+            <li class="main-sub-li">
+              <a href="{{ childlink.url }}">
+                {{ childlink.title }}
+              </a>
+
+              {% for  grandlink in childlink.links %}
+              {% if forloop.length >= 1 %}
+              {% render 'angle-right' %}
+              <ul class="mob-dropdown-submenu1">  
+                <li class="main-sub-li-head">
+                  {% render 'angle-right' %}
+                  <a href="#">
+                    {{ childlink.title }}
+                  </a>
+                </li>
+                {% for grandlink in childlink.links %}
+                <li>
+                  <a href="{{ grandlink.url }}">
+                    {{ grandlink.title }}
+                  </a>
+                </li>
+
+                {% endfor %}
+              </ul>
+              {% endif %}
+              {% break %}
+              {% endfor %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% break %}
+          {% endfor %}
+
+        </li>
+        {% endfor %}
+        
+<!-- mob trend  -->
+        {% for block in section.blocks %}
+        {% if block.type == 'number' %}
+
+        <li class="main-li trend">
+          <a href="#">
+            {{ linklists[block.settings.trend].title }}
+          </a>
+          {% render 'angle-right' %}
+          <div class="dropdown-product-menu mob-dropdown-menu1">
+            <ul class="dropdown-product-menu-ul">
+              <li class="main-li-head">
+                {% render 'angle-right' %}
+                <a href="#">
+                  {{ linklists[block.settings.trend].title }}
+                </a>
+              </li>
+              {% for link1 in linklists[block.settings.trend].links %}
+              <li class="main-sub-li">
+
+                <a href="{{ link1.url }}">
+                  {{ link1.title }}
+                </a>     
+              </li>
+              {% endfor %}
+
+              {% if block.settings.leftmenu != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="{{ block.settings.leftmenu_url }}">
+                  {% if block.settings.leftmenu_title != blank %}
+                  {{ block.settings.leftmenu_title }}
+                  {% else %}
+                  {{ linklists[block.settings.leftmenu].title }}
+                  {% endif %}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {% if block.settings.leftmenu_title != blank %}
+                      {{ block.settings.leftmenu_title }}
+                      {% else %}
+                      {{ linklists[block.settings.leftmenu].title }}
+                      {% endif %}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.leftmenu].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+
+              {% if block.settings.rightmenu != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="{{ block.settings.rightmenu_url }}">
+                  {% if block.settings.rightmenu_title != blank %}
+                  {{ block.settings.rightmenu_title }}
+                  {% else %}
+                  {{ linklists[block.settings.rightmenu].title }}
+                  {% endif %}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {% if block.settings.rightmenu_title != blank %}
+                      {{ block.settings.rightmenu_title }}
+                      {% else %}
+                      {{ linklists[block.settings.rightmenu].title }}
+                      {% endif %}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.rightmenu].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+            </ul> 
+
+            {% if block.settings.img != blank %}    
+            <div class="resp-trend-img-block">
+              <figure>
+                <a href="{{ block.settings.imglink }}">
+                  <img src="{{ block.settings.img | img_url:"400x400" }}">                      
+                </a>
+              </figure>
+            </div>  
+            {% endif %}
+
+
+            <div class="resp-product-slider-main">
+              <ul class="resp-product-slider">
+                {% for block in section.blocks %}
+                {% if block.type == 'product' and block.settings.product != blank %}
+                <li>
+
+                  <figure>
+                    <a href="{{ block.settings.product.url }}">
+                      <div class="product-img-block">
+                        {% for img in  block.settings.product.images %}
+                        {% if forloop.first %}
+                        <img src="{{ img | img_url:"150x200"  }}">
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+                    </a>
+                    <figcaption>
+                      <a class="vendor" href="{{ block.settings.product.vendor }}">
+                        {{ block.settings.product.vendor }}
+                      </a>
+                      <a class="title" href="{{ block.settings.product.url }}">
+                        {{ block.settings.product.title }}
+                      </a>
+                      <p>
+                        <span class="compare-price">
+                          {{ block.settings.product.compare_at_price | money_without_trailing_zeros }}
+                        </span><br>
+                        <span class="original-price">
+                          {{ block.settings.product.price | money_without_trailing_zeros }}
+                        </span>
+                      </p>
+                    </figcaption>
+
+                  </figure>
+
+
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+<!-- mob trend end -->
+        
+<!--  mob new in -->
+        
+        {% for block in section.blocks %}
+        {% if block.type == 'textarea' %}
+        <li class="main-li newin">
+          <a href="#">
+            {{ linklists[block.settings.menu1].title }}
+          </a>
+          {% render 'angle-right' %}
+          <div class="dropdown-product-menu mob-dropdown-menu1">
+            <ul class="dropdown-product-menu-ul">
+              <li class="main-li-head">
+                {% render 'angle-right' %}
+                <a href="#">
+                  {{ linklists[block.settings.menu1].title }}
+                </a>
+              </li>
+              {% for link1 in linklists[block.settings.menu1].links %}
+              <li class="main-sub-li">
+
+                <a href="{{ link1.url }}">
+                  {{ link1.title }}
+                </a>     
+              </li>
+              {% endfor %}
+              
+              {% if block.settings.menu2 != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="#">
+                  {{ linklists[block.settings.menu2].title }}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {{ linklists[block.settings.menu2].title }}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.menu2].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+              
+              {% if block.settings.menu3 != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="#">
+                  {{ linklists[block.settings.menu3].title }}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {{ linklists[block.settings.menu3].title }}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.menu3].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+              
+              {% if block.settings.menu4 != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="#">
+                  {{ linklists[block.settings.menu4].title }}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {{ linklists[block.settings.menu4].title }}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.menu4].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+              
+              {% if block.settings.menu5 != blank  %}    
+              <li class="main-sub-li leftmenu">
+                <a href="#">
+                  {{ linklists[block.settings.menu5].title }}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {{ linklists[block.settings.menu5].title }}
+                    </a>
+                  </li>
+                  {% for link1 in linklists[block.settings.menu5].links %}
+                  <li>
+                    <a href="{{ link1.url }}">
+                      {{ link1.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+            </ul>
+
+            <ul class="dropdown-product-menu-collection">
+              {% if block.settings.collection1 != blank %}
+              <li>
+                <figure>
+                  <div class="collection-img-block">
+                    <a href="{{ block.settings.collection1.url }}">
+                      {% if block.settings.collection1.image != blank %}
+                      <img src="{{ block.settings.collection1.image | img_url:"1920x1920"  }}">
+                      {% else %}
+                      {% for product in block.settings.collection1.products %}
+                      {% if forloop.first and product.images %}
+                      {% for img in product.images %}
+                      {% if forloop.first %}
+                      <img src="{{ img | img_url:"1920x1920"  }}">
+                      {% endif %}
+                      {% endfor %}
+
+                      {% endif %}
+                      {% endfor %}
+                      {% endif %}
+                    </a>
+                  </div>
+
+                  <figcaption>
+                    <a class="title" href="{{ block.settings.collection1.url }}">
+                      {{ block.settings.collection1.title }}
+                    </a>
+                    {% if block.settings.collection1_label != blank %}
+                    <h5>
+                      {{ block.settings.collection1_label }}
+                    </h5>
+                    {% endif %}
+
+                    {% if block.settings.shopnow_text != blank %}
+                    <a class="shopnow" href="{{ block.settings.collection1.url }}">
+                      {{ block.settings.shopnow_text }}
+                    </a>
+
+                    {% endif %}
+                  </figcaption>
+                </figure>
+              </li>
+              {% endif %}
+
+              {% if block.settings.collection2 != blank %}
+              <li>
+                <figure>
+                  <div class="collection-img-block">
+                    <a href="{{ block.settings.collection2.url }}">
+
+                      {% if block.settings.collection2.image != blank %}
+                      <img src="{{ block.settings.collection2.image | img_url:"1920x1920"  }}">
+                      {% else %}
+                      {% for product in block.settings.collection2.products %}
+                      {% if forloop.first and product.images %}
+                      {% for img in product.images %}
+                      {% if forloop.first %}
+                      <img src="{{ img | img_url:"1920x1920"  }}">
+                      {% endif %}
+                      {% endfor %}
+
+                      {% endif %}
+                      {% endfor %}
+                      {% endif %}
+                    </a>
+                  </div>
+
+                  <figcaption>
+                    <a class="title" href="{{ block.settings.collection2.url }}">
+                      {{ block.settings.collection2.title }}
+                    </a>
+                    {% if block.settings.collection2_label != blank %}
+                    <h5>
+                      {{ block.settings.collection2_label }}
+                    </h5>
+                    {% endif %}
+
+                    {% if block.settings.shopnow_text != blank %}
+                    <a class="shopnow" href="{{ block.settings.collection2.url }}">
+                      {{ block.settings.shopnow_text }}
+                    </a>
+
+                    {% endif %}
+                  </figcaption>
+                </figure>
+              </li>
+              {% endif %}
+
+              {% if block.settings.alphabet == true %}
+              <li class="alpha-block">
+                {% if block.settings.alpha_head != blank %}
+                <h6>
+                  {{ block.settings.alpha_head }}
+                </h6>
+                {% endif %}
+                <ul>
+                  {% assign letters = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" | split: ' ' %}  
+                  {% for letter in letters %}
+                  <li class="{%- for collection in collections -%}
+                             {%- assign temp = false -%}
+                             {%- for vendor in collection.all_vendors  -%}
+                             {%- assign ven = vendor | upcase | slice:0  -%}
+                             {%- if ven == letter  -%}
+                             vendor-found
+                             {%- assign temp = true -%}
+                             {% break %}
+                             {%- endif -%}
+                             {%- endfor -%}
+                             {%- if temp == true -%}
+                             {%- break -%}
+                             {%- endif -%}
+                             {%- endfor -%}
+                             ">   
+                    <a href="/pages/brands/{{ letter }}">
+                      {{ letter }}
+                    </a>
+                  </li>
+                  {% endfor %}   
+
+                  {% assign letters = "1 2 3 4 5 6 7 8 9 0" | split: ' ' %}  
+                  {% for letter in letters %}
+
+                  {%- for collection in collections -%}
+                  {%- assign temp = false -%}
+
+                  {%- for vendor in collection.all_vendors  -%}
+                  {%- assign ven = vendor | upcase | slice:0  -%}
+                  {%- if ven == letter  -%}
+                  <li class="vendor-found">   
+                    <a href="/pages/brands/{{ letter }}">
+                      1-9
+                    </a>
+                  </li>
+                  {%- assign temp = true -%}
+                  {% break %}
+                  {%- endif -%}
+
+                  {%- endfor -%}
+
+                  {%- if temp == true -%} 
+                  {%- break -%}
+                  {%- endif -%}
+
+                  {%- endfor -%}
+
+                  {%- if temp == true -%} 
+                  {%- break -%}
+                  {%- endif -%}
+
+                  {% endfor %}   
+
+                  {% if temp != true %}
+                  <li >   
+                    <a href="#">
+                      1-9
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+                {% if block.settings.alpha_brand != blank %}
+                <a class="all-brand" href="/pages/brands/">
+                  {{ block.settings.alpha_brand }}
+                </a>
+                {% endif %}
+
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+ 
+<!--  mob new in end -->
+<!--  mob multi collection -->
+
+        {% for block in section.blocks  %}
+        {% if block.type == "range" and block.settings.title != blank %}
+        <li class="main-li multi-collection">
+          <a href="#">
+            {{ block.settings.title }}
+          </a>
+          {% render 'angle-right' %}
+          <div class="dropdown-product-menu mob-dropdown-menu1">
+            <ul class="dropdown-product-menu-ul">
+              <li class="main-li-head">
+                {% render 'angle-right' %}
+                <a href="#">
+                  {{ block.settings.title }}
+                </a>
+              </li>
+              {% for block in section.blocks %}
+              {% if block.type == "collection" and block.settings.c != blank %}
+            
+              {% if block.settings.img != blank  %}
+              <li class="main-sub-li">  
+                <figure class="{% if block.settings.imgtop == false %}reverse{% endif %}">
+                  {% if block.settings.img != blank %}
+                  <div class="collection-img">  
+                    <a href=" {{ block.settings.title_url }}">
+                      <img  src=" {{ block.settings.img | img_url:"700x700" }} " alt=" {{ block.settings.img.alt }} ">                
+                    </a>
+                  </div>
+                  {% endif %}
+                </figure>
+              </li>
+              {% endif %}
+               
+              {% if block.settings.title != blank and block.settings.title_url != blank and block.settings.c != blank %}
+              <li class="main-sub-li leftmenu">
+                <a href="{{ block.settings.title_url }}">
+                  {{ block.settings.title }}
+                </a>
+                {% render 'angle-right' %}
+                <ul class="mob-dropdown-submenu1">  
+                  <li class="main-sub-li-head">
+                    {% render 'angle-right' %}
+                    <a href="#">
+                      {{ block.settings.title }}
+                    </a>
+                  </li>
+                  {% for link in linklists[block.settings.c].links %}                     
+                  <li>
+                    <a href="{{ link.url }}">
+                      {{ link.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+              
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+<!--  mob multi collection end -->
+<!--  mob sale -->
+
+        {% for block in section.blocks %}
+        {% if block.type == "html" and block.settings.sale_linklist != blank  %}
+        <li class="main-li colored-li">
+          <a href="{{ block.settings.title_link }}">
+           {% if block.settings.title != blank %}
+            {{ block.settings.title }}
+            {% else %}
+            {{ linklists[block.settings.sale_linklist].title }}
+            {% endif %}
+            
+            {% if block.settings.title_badge != blank %}
+            <span> 
+              {{ block.settings.title_badge }}
+            </span>
+            {% endif %}
+          </a>
+           
+
+          {% for  link in linklists[block.settings.sale_linklist].links %}
+          {% if forloop.length >= 1 %}
+          {% render 'angle-right' %}
+          <ul class="mob-dropdown-menu1" >  
+            <li class="main-li-head">
+              {% render 'angle-right' %}
+              <a href="#">
+                {% if block.settings.title != blank %}
+                {{ block.settings.title }}
+                {% else %}
+                {{ linklists[block.settings.sale_linklist].title }}
+                {% endif %}
+              </a>
+            </li>
+             {% for  link in linklists[block.settings.sale_linklist].links %}
+            <li class="main-sub-li">
+              <a href="{{ link.url }}">
+                {{ link.title }}
+              </a>
+
+              {% for  child in link.links %}
+              {% if forloop.length >= 1 %}
+              {% render 'angle-right' %}
+              <ul class="mob-dropdown-submenu1">  
+                <li class="main-sub-li-head">
+                  {% render 'angle-right' %}
+                  <a href="#">
+                    {{ link.title }}
+                  </a>
+                </li>
+                {% for child in link.links %}
+                <li>
+                  <a href="{{ child.url }}">
+                    {{ child.title }}
+                  </a>
+                </li>
+
+                {% endfor %}
+              </ul>
+              {% endif %}
+              {% break %}
+              {% endfor %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% break %}
+          {% endfor %}
+
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% comment %}
+
+        {% for block in section.blocks %}
+        {% if block.type == "html" and block.settings.sale_linklist != blank  %}
+
+        <li class="colored-li">
+          <a href="{{ block.settings.title_link }}">
+            {% if block.settings.title != blank %}
+            {{ block.settings.title }}
+            {% else %}
+            {{ linklists[block.settings.sale_linklist].title }}
+            {% endif %}
+            
+             {% if block.settings.title_badge != blank %}
+          <span> 
+            {{ block.settings.title_badge }}
+          </span>
+          {% endif %}
+          </a>
+         
+
+          {% for  link in linklists[block.settings.sale_linklist].links %}
+          {% if forloop.length >= 1 %}
+          <ul class="main-dropdown-menu1" >  
+            {% for link in linklists[block.settings.sale_linklist].links %}
+            <li>
+              <a href="{{ link.url }}">
+                {{ link.title }}
+              </a>
+
+              {% for  child in link.links %}
+              {% if forloop.length >= 1 %}
+              <ul class="main-dropdown-submenu1" >  
+                {% for  child in link.links %}
+                <li>
+                  <a href="{{ child.url }}">
+                    {{ child.title }}
+                  </a>
+
+                  {% for  grand in child.links %}
+                  {% if forloop.length >= 1 %}
+                  <ul class="main-dropdown-submenu1-grand" >  
+                    {% for  grand in child.links %}
+                    <li>
+                      <a href="{{ grand.url }}">
+                        {{ grand.title }}
+                      </a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                  {% break %}
+                  {% endfor %}
+
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+              {% break %}
+              {% endfor %}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% break %}
+          {% endfor %}
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% endcomment %}
+        
+<!--  end mob sale -->
+      </ul>
+
+      {% endif %}
+      {% break %}
+      {% endfor %}
+      {% endif %}
+    </nav>
+    {% if section.settings.wishlist == true %}
+    <div class="resp-wishlist">
+      <a href="/pages/wishlist">
+        {% render 'wishlist-icon' %}
+        <span class="wishlist"> My Wishlist</span>
+        <span class="counter">0</span>
+      </a>
+    </div>
+    {% endif %}
+    {% if section.settings.language == true %}
+    <div class="language-block">
+      <span>
+        Language
+      </span>
+      
+       {%  form 'localization'%}
+      {% comment %}
+          <button>
+            {{ localization.language.endonym_name | capitalize }}
+            {{ localization.language.iso_code | capitalize }}
+            {% render 'caret-icon' %}
+          </button>
+      {% endcomment %}
+      
+          <select>
+            {%- for language in localization.available_languages -%}
+            <option class="disclosure__item" tabindex="-1">
+              <a class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset" href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %} data-value="{{ language.iso_code }}">
+                {{ language.iso_code | upcase }}
+              </a>
+
+            </option>
+            {%- endfor -%}
+          </select>
+      
+          {% endform %}
+    </div>
+    {% endif %}
+    {% if section.settings.currency == true %}
+     <div class="currency-block">
+      <span>
+        Currency
+      </span>
+      
+       {%  form 'localization'%}
+      {% comment %}
+          <button>
+            {{ localization.language.endonym_name | capitalize }}
+            {{ localization.language.iso_code | capitalize }}
+            {% render 'caret-icon' %}
+          </button>
+      {% endcomment %}
+      
+          <select>
+            {%- for language in shop.enabled_currencies -%}
+            <option class="disclosure__item" tabindex="-1">
+              <a class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset" href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %} data-value="{{ language.iso_code }}">
+                {{ language.iso_code | upcase }}
+              </a>
+            
+
+            </option>
+            {%- endfor -%}
+          </select>
+      
+          {% endform %}
+    </div>
+    {% endif %}
+  </div>
+  
+<!-- login popup   -->
+  <div class="login-popup-block">
+    <div class="login-close">
+      <button class="close">
+        {% render 'close-icon' %}
+        CLOSE
+      </button>
+    </div>
+    <div class="login-form-block">
+        <h5 class="login-head">LOGIN</h5>
+      {% form 'customer_login',class:"login-form" %}
+      {{ form.errors | default_errors }}
+      <div class="form-control-block">
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input class="form-control" type="email" name="customer[email]" placeholder="Email Address" required>
+      </div>
+      <div class="form-control-block">
+        <label for="password">Password <span class="required">*</span></label>
+        <input class="form-control" type="password" name="customer[password]" placeholder="Password" required>
+      </div>
+      <div class="form-control-block">
+        <input class="form-control login-btn" type="submit" name="LOGIN" Value="LOGIN">
+      </div>
+      <div class="form-control-block">
+        <a class="text-hover forgot-password" href="#recover">
+          Forgot your password?
+        </a>
+      </div>
+      <div class="form-control-block">
+      <a href="/account/register" class="btn btn-register">
+              Register
+            </a>
+      </div>
+      {% endform %}
+      
+
+      </div>
+  </div>
+  
+<!--  cart popup  -->
+{% render 'side-cart' %}
+
+</div>
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [{
+            "type": "color",
+            "id": "header_top",
+            "label": "Header Top bar Background",
+            "default": "#000000"
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu"
+        },
+        {
+            "type": "header",
+            "content": "Discount Announcement"
+        },
+        {
+            "type": "html",
+            "id": "discount",
+            "label": "Text",
+            "default": "<span>EXTRA 10% OFF</span> ON YOUR FIRST ORDER",
+            "info": "Add <span> tag for Bottom-Border"
+        },
+        {
+            "type": "url",
+            "id": "discount_link",
+            "label": "Link"
+        },
+        {
+            "type": "checkbox",
+            "id": "login",
+            "label": "Show Account Login",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "wishlist",
+            "label": "Show Wishlist",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "cart",
+            "label": "Show Add to Cart",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "help",
+            "label": "Show Customer Help",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "language",
+            "label": "Show Language Selector",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "currency",
+            "label": "Show Currency Selector",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "search",
+            "label": "Show Search Block",
+            "default": true
+        }
+    ],
+    "blocks": [{
+            "name": "Brand Logo",
+            "type": "image_picker",
+            "limit": 5,
+            "settings": [{
+                    "type": "image_picker",
+                    "id": "brand_logo",
+                    "label": "Logo"
+                },
+                {
+                    "type": "url",
+                    "id": "brand_link",
+                    "label": "Link"
+                }
+            ]
+        },
+        {
+            "name": "Default MegaMenu ",
+            "type": "url",
+            "settings": [{
+                    "type": "text",
+                    "id": "menu_title",
+                    "label": "Link Title"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu1",
+                    "label": "Menu"
+                }
+            ]
+        },
+        {
+            "name": "Megamenu with Products",
+            "type": "number",
+            "settings": [
+				{
+                    "type": "text",
+                    "id": "megapro",
+                    "label": "Link Title"
+                },
+				{
+                    "type": "link_list",
+                    "id": "trend",
+                    "label": "Menu"
+                },
+                {
+                    "type": "text",
+                    "id": "leftmenu_title",
+                    "label": "Left Side Menu Title"
+                },
+                {
+                    "type": "url",
+                    "id": "leftmenu_url",
+                    "label": "Left Side Menu Url"
+                },
+                {
+                    "type": "link_list",
+                    "id": "leftmenu",
+                    "label": "Left Side Menu"
+                },
+                {
+                    "type": "text",
+                    "id": "rightmenu_title",
+                    "label": "Right Side Menu Title"
+                },
+                {
+                    "type": "url",
+                    "id": "rightmenu_url",
+                    "label": "Right Side Menu Url"
+                },
+                {
+                    "type": "link_list",
+                    "id": "rightmenu",
+                    "label": "Right Side Menu"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Image with Link"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Image"
+                },
+                {
+                    "type": "url",
+                    "id": "imglink",
+                    "label": "Link"
+                },
+				{
+                    "type": "product",
+                    "id": "megapro_product1",
+                    "label": "Product"
+            	},
+				{
+                    "type": "product",
+                    "id": "megapro_product2",
+                    "label": "Product"
+            	},
+				{
+                    "type": "product",
+                    "id": "megapro_product3",
+                    "label": "Product"
+            	},
+				{
+                    "type": "product",
+                    "id": "megapro_product4",
+                    "label": "Product"
+            	}
+            ]
+        },
+        {
+            "name": "Megamenu with Collections",
+            "type": "textarea",
+            "settings": [
+
+                {
+                    "type": "link_list",
+                    "id": "menu1",
+                    "label": "Navigation Menu 1"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu2",
+                    "label": "Navigation Menu 2"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu3",
+                    "label": "Navigation Menu 3"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu4",
+                    "label": "Navigation Menu 4"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu5",
+                    "label": "Navigation Menu 5"
+                },
+                {
+                    "type": "header",
+                    "content": "Collections"
+                },
+                {
+                    "type": "collection",
+                    "id": "collection1",
+                    "label": "Collection 1"
+                },
+
+                {
+                    "type": "text",
+                    "id": "collection1_label",
+                    "label": "Collection1 Label",
+                    "default": "Collection1"
+                },
+                {
+                    "type": "collection",
+                    "id": "collection2",
+                    "label": "Collection 2"
+                },
+                {
+                    "type": "text",
+                    "id": "collection2_label",
+                    "label": "Collection2 Label",
+                    "default": "Collection2"
+                },
+                {
+                    "type": "text",
+                    "id": "shopnow_text",
+                    "label": "Button Text",
+                    "default": "Shop Now"
+                },
+                {
+                    "type": "header",
+                    "content": "Shop by Alphabet Block"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "alphabet",
+                    "label": "Show Shop by Alphabet Block",
+                    "default": true
+                },
+                {
+                    "type": "text",
+                    "id": "alpha_head",
+                    "label": "Heading",
+                    "default": "Shop by Alphabets"
+                },
+                {
+                    "type": "text",
+                    "id": "alpha_brand",
+                    "label": "Button Text",
+                    "default": "View All Brands"
+                }
+
+            ]
+        },
+        {
+            "name": "Collection with Images",
+            "type": "range",
+            "limit": 1,
+            "settings": [{
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Collections"
+            }]
+        },
+        {
+            "name": "Collection",
+            "type": "collection",
+            "limit": 5,
+            "settings": [{
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "url",
+                    "id": "title_url",
+                    "label": "Title Url"
+                },
+                {
+                    "type": "link_list",
+                    "id": "c",
+                    "label": "Link List"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Image"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "imgtop",
+                    "label": "Image at Top",
+                    "default": true
+                }
+            ]
+        },
+        {
+            "name":"Sale",
+            "type":"html",
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+				{
+                    "type": "url",
+                    "id": "title_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "text",
+                    "id": "title_badge",
+                    "label": "Badge"
+                },
+                {
+                    "type": "link_list",
+                    "id": "sale_linklist",
+                    "label": "Link List"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

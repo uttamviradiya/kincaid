@@ -1,0 +1,379 @@
+{% comment %}
+For Cart: Update Cart Items Counter when Ajax add to cart Success
+$('.recently-view-products .rv-cart .rv-counter').text(CartItems);
+{% endcomment %}
+
+
+<style>
+  .recently-view-products{position: fixed;top: 50%;right: 5%;transform: translateY(-50%);z-index:1111;transition:0.5s;}
+
+  .recently-view-products.rv-pro-show{right:0;transform:translate(0,-50%);}
+  .recently-view-products .recently-view-main.rv-disappear{transform:translateX(179%) }
+  .recently-view-products .recently-view-main{max-width:80px;background: beige;padding: 0; position:relative;transition:0.5s;box-shadow:0 1px 6.8px 1.2px #0000001f;}
+
+  .recently-view-products .recently-view-main .rv-slided-btn{border: none;outline: 0;position: absolute;top: 0;right: 100%;background: beige;padding: 8px 12px;box-shadow:-3px -2px 6.8px -0.8px #00000014;}
+  .recently-view-products .recently-view-main .rv-slided-btn svg{fill:grey;width:10px;height:10px;}
+
+  .recently-view-products .recently-view-main .rv-title{padding:10px 10px 0 10px;text-align:center;margin:0;}
+  .recently-view-products .recently-view-list{background: beige;padding:35px 0;}
+
+  .recently-view-products .recently-view-main .rv-cart{text-align: center;padding: 15px 0;border-bottom: 1px solid #80808047;}
+  .recently-view-products .recently-view-main .rv-cart a{position:relative;}
+  .recently-view-products .recently-view-main .rv-cart .rv-counter{position:absolute;top: -3px;right: -5px;background: black;width: 15px;height: 15px;border-radius: 50%;color: white;font-size: 11px;}
+  .recently-view-products .recently-view-main .rv-cart svg{width:20px;}
+
+  .recently-view-products .recently-view-list.rv-manage-padd{padding:15px 0;}
+  .recently-view-products .recently-view-list.rv-manage .slick-list{height:fit-content !important;}
+
+  .recently-view-products .recently-view-list li{list-style-type:none;padding: 8px;display: flex;justify-content: end;margin-left:auto;width: fit-content;}
+  .recently-view-products .recently-view-list figure{width:100%;height:107px;}
+
+  /*   .recently-view-products .recently-view-list figure img{object-fit:contain;} */
+  .recently-view-products .rv-pro-info{width: 150px;padding:10px;height:125px;display:none;}
+  /*   .recently-view-products li:hover .rv-pro-info{display:block;} */
+  .recently-view-products .recently-view-list .rv-pro-info a{display:block;}
+  .recently-view-products .recently-view-list .rv-pro-info .rv-pro-vendor{font-size: 14px;font-weight: 500;}
+  .recently-view-products .recently-view-list .rv-pro-info .rv-pro-title{font-size:14px;line-height:15px;}
+  .recently-view-products .recently-view-list .rv-pro-info .rv-pro-price{font-size:14px;font-weight:500;}
+  /*   .recently-view-products .recently-view-list .rv-pro-info .rv-pro-price span{} */
+  .recently-view-products .recently-view-list .rv-pro-info .rv-pro-price .price-cp{opacity:0.6;border-right:1px solid #808080ad;padding:0 5px 0 0;margin:0 5px 0 0;}
+  .recently-view-products .recently-view-list .rv-pro-info .rv-pro-btn{background: none;text-decoration: underline;border: none;text-underline-position: under;font-weight: 500;padding:0;}
+
+
+  .recently-view-products .recently-view-list .pro-info-rv{position: absolute;right:0;width: 300px;height: 125px;z-index: 111;box-shadow:0px 0px 3px 2px #00000029;}
+  .recently-view-products .recently-view-list .pro-info-rv .rv-pro-info{display:block;width:74%;background:beige;height:100%;}
+  .recently-view-products .recently-view-list .pro-info-rv figure{width:26%;height:100%;}
+  .recently-view-products .recently-view-list .pro-info-rv figure img{display:none;}
+
+  /*   .recently-view-products .slick-prev:before,.recently-view-products .slick-next:before{color:black;} */
+  .recently-view-products .rv-prev{top: 0%;left: 50%;transform: translateX(-50%) rotate(90deg);z-index: 111;opacity:0.5;}
+  .recently-view-products .rv-next{top:auto;bottom:0%;left:50%;transform: translateX(-50%) rotate(90deg);z-index: 111;opacity:0.5;}
+
+  .recently-view-products .rv-toptop{display: flex;justify-content:center;margin: 0 auto;background: none;border: none;padding: 10px 0;width: 100%;border-top: 0.5px solid #80808029;outline:0;border-radius:2px;}
+  .recently-view-products .rv-top span{padding:0 5px}
+  .recently-view-products .rv-top svg{width: 18px;transform: rotate(90deg);}
+
+  .recently-view-products .rv-rvblock-top{position: fixed;top: 50%;right: 0;transform:translateX(800%);transition:0.5s;}
+  .recently-view-products .rv-rvblock-top .rv-top,.recently-view-products .rv-rvblock-top .rv-appered-btn{outline:0;border: 1px solid #80808054;background: white;display:block;width: 45px;height: 40px}
+  .recently-view-products .rv-rvblock-top .rv-appered-btn svg{width:15px;transform: rotate(180deg);}
+
+  .recently-view-products .rv-rvblock-top .rv-top-always{display:block !important;opacity:1 !important}
+
+  .recently-view-products.rv-pro-show .rv-rvblock-top{transform:translateX(-5px);}
+
+  .recently-view-products .recently-view-main .rv-cart{display:none !important;}
+  .recently-view-products .rv-toptop{display:none !important;}
+
+  @media(max-width:767px){
+    .recently-view-products.rv-pro-show .rv-rvblock-top{transform:translateX(-15px);}
+  }
+  
+  .recently-view-products .recently-view-main{background:{{ section.settings.back }}}
+  .recently-view-products .recently-view-main .rv-slided-btn{background:{{ section.settings.back }}}
+  .recently-view-products .recently-view-list{background:{{ section.settings.back }}}
+  .recently-view-products .recently-view-list .pro-info-rv .rv-pro-info{background:{{ section.settings.back }}}
+</style>
+<section class="recently-view-products" id='recent-view-{{ section.id }}'>
+  <div class="recently-view-main">
+    <div class="rv-cart">
+      <a href="/cart">
+        {% render 'cart-icon' %}
+        <span class="rv-counter">{{ cart.item_count }}</span>
+      </a>
+    </div>
+    {% if section.settings.text != blank %}
+    <h6 class='rv-title'>
+      {{ section.settings.text }}
+    </h6>
+    {% endif %}
+    <ul class="recently-view-list rv-manage rv-manage-padd">
+
+    </ul>
+
+    <button class='rv-top rv-toptop'>
+      <span class='top-arr'>
+        <svg viewBox="0 0 50 50"><path d="M 11.957031 13.988281 C 11.699219 14.003906 11.457031 14.117188 11.28125 14.308594 L 1.015625 25 L 11.28125 35.691406 C 11.527344 35.953125 11.894531 36.0625 12.242188 35.976563 C 12.589844 35.890625 12.867188 35.625 12.964844 35.28125 C 13.066406 34.933594 12.972656 34.5625 12.71875 34.308594 L 4.746094 26 L 48 26 C 48.359375 26.003906 48.695313 25.816406 48.878906 25.503906 C 49.058594 25.191406 49.058594 24.808594 48.878906 24.496094 C 48.695313 24.183594 48.359375 23.996094 48 24 L 4.746094 24 L 12.71875 15.691406 C 13.011719 15.398438 13.09375 14.957031 12.921875 14.582031 C 12.753906 14.203125 12.371094 13.96875 11.957031 13.988281 Z"></path></svg>
+      </span>
+      <span class='top-text'>
+        Top
+      </span>
+    </button>
+    <button class="rv-slided-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24">
+        <title>Hide Recently View</title>
+        <path d="M1.821 22.676c-.134.151-.301.227-.485.227s-.351-.076-.485-.227a.849.849 0 0 1 0-1.097l8.529-9.647L.851 2.285c-.268-.303-.268-.794 0-1.097s.702-.303.97 0l9.031 10.196a.849.849 0 0 1 0 1.097L1.821 22.677z"></path>
+        <path d="M12.061 22.676c-.134.151-.301.227-.485.227s-.351-.076-.485-.227a.849.849 0 0 1 0-1.097l8.529-9.647-8.529-9.647c-.268-.303-.268-.794 0-1.097s.702-.303.97 0l9.031 10.196a.849.849 0 0 1 0 1.097l-9.031 10.196z"></path>
+      </svg>
+    </button>
+  </div>
+  <div class='rv-rvblock-top'>
+    <button class="rv-appered-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24">
+        <title>Hide Recently View</title>
+        <path d="M1.821 22.676c-.134.151-.301.227-.485.227s-.351-.076-.485-.227a.849.849 0 0 1 0-1.097l8.529-9.647L.851 2.285c-.268-.303-.268-.794 0-1.097s.702-.303.97 0l9.031 10.196a.849.849 0 0 1 0 1.097L1.821 22.677z"></path>
+        <path d="M12.061 22.676c-.134.151-.301.227-.485.227s-.351-.076-.485-.227a.849.849 0 0 1 0-1.097l8.529-9.647-8.529-9.647c-.268-.303-.268-.794 0-1.097s.702-.303.97 0l9.031 10.196a.849.849 0 0 1 0 1.097l-9.031 10.196z"></path>
+      </svg>
+    </button>
+    <button class="rv-top rv-top-always">
+      <span class='top-arr'>
+        <svg viewBox="0 0 50 50"><path d="M 11.957031 13.988281 C 11.699219 14.003906 11.457031 14.117188 11.28125 14.308594 L 1.015625 25 L 11.28125 35.691406 C 11.527344 35.953125 11.894531 36.0625 12.242188 35.976563 C 12.589844 35.890625 12.867188 35.625 12.964844 35.28125 C 13.066406 34.933594 12.972656 34.5625 12.71875 34.308594 L 4.746094 26 L 48 26 C 48.359375 26.003906 48.695313 25.816406 48.878906 25.503906 C 49.058594 25.191406 49.058594 24.808594 48.878906 24.496094 C 48.695313 24.183594 48.359375 23.996094 48 24 L 4.746094 24 L 12.71875 15.691406 C 13.011719 15.398438 13.09375 14.957031 12.921875 14.582031 C 12.753906 14.203125 12.371094 13.96875 11.957031 13.988281 Z"></path></svg>
+      </span>
+    </button>
+  </div>
+
+</section>
+{% schema %}
+  {
+    "name": "Recently View2",
+    "settings": [
+{
+"type":"text",
+"id":"text",
+"label":"Title",
+"default":"Recently View"
+},
+{
+  "type": "range",
+  "id": "pro_show",
+  "min": 4,
+  "max": 16,
+  "step": 1,
+  "unit": "px",
+  "label": "Product per Show",
+  "default": 4
+},
+{
+"type":"color",
+"id":"back",
+"label":"Background Color",
+"default":"#ffffff"
+}
+],
+	"presets":[
+{
+	"name":"Recently View2"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+
+
+<script>
+  $(document).ready(function(){
+
+    let rv = [];
+    console.log("{{ template.name }}");
+    {% if template.name == "product" %}
+
+    let phandle = "{{ product.handle }}";
+    $.getJSON("/products/"+ phandle +".js",function(product){
+      //       console.log(product);
+      let rvmain = JSON.parse(localStorage.getItem("recently_view"));
+      if(!rvmain)
+      {	
+        rv.push(product);
+        localStorage.setItem("recently_view",JSON.stringify(rv));
+        rv = JSON.parse(localStorage.getItem("recently_view"));
+      }
+      else
+      {
+        rv = JSON.parse(localStorage.getItem("recently_view"));
+        let temp = 0;
+        $(rv).each(function(i,pro){
+          if(pro.id == product.id)
+          {
+            temp = 1;
+          }
+        });
+        if(temp == 0)
+        {
+          rv.push(product);
+        }
+        
+        localStorage.setItem("recently_view",JSON.stringify(rv));
+        rv = JSON.parse(localStorage.getItem("recently_view"));
+        console.log("pro rv");
+        console.log(rv);
+      }
+      rvrv("{{ product.id }}");      
+    });
+
+    {% else %}
+    rvrv(0);
+    {% endif %}
+
+    function rvrv(temp){
+//       alert(temp);
+      rv = JSON.parse(localStorage.getItem("recently_view"));
+
+      console.log("rv");
+      console.log(rv);
+      let btn;
+      if(!rv)
+      {
+        $(".recently-view-products").hide();
+      }
+      else
+      {
+        if(rv.length > {{ section.settings.pro_show }})
+        {
+          rv.shift();
+          localStorage.setItem("recently_view",JSON.stringify(rv));
+          rv = JSON.parse(localStorage.getItem("recently_view"));
+        }
+        console.log(rv);
+        $(".recently-view-products").show();
+      for( let i = rv.length - 1;i >= 0; i--)
+      {
+        if(rv[i].id != temp)
+        {
+          if(rv[i].variants.length > 1)
+          {
+            btn = "<a href='"+rv[i].url+"' class='rv-pro-btn'>Select Otions</a>";
+
+          }
+          else{
+            btn = "<form method='post' action='/cart/add'><input type='hidden' name='id' value='"+rv[i].variants[0].id+"'><input type='hidden' name='quantity' value='"+1+"'><input type='submit' class='rv-pro-btn' value='Add to Cart'></form>";
+
+          }
+          let price_block;
+          if(rv[i].compare_at_price)
+          {
+            price_block = "<span class='price-cp'>"+Shopify.formatMoney(rv[i].compare_at_price)+"</span><span class='price-rp'>"+Shopify.formatMoney(rv[i].price)+"</span>";
+          }
+          else{
+            price_block = "<span class='price-rp'>"+Shopify.formatMoney(rv[i].price)+"</span>";
+          }
+          $(".recently-view-products .recently-view-main .recently-view-list").append("<li data-id='"+ rv[i].id +"'><div class='rv-pro-info'><a href='/collections/"+rv[i].vendor.toLowerCase()+"' class='rv-pro-vendor'>"+rv[i].vendor+"</a><a href='"+rv[i].url+"' class='rv-pro-title'>"+rv[i].title+"</a><p class='rv-pro-price'>"+price_block+"</p>"+ btn +"</div><figure><img src='"+rv[i].featured_image+"'></figure></li>");
+
+          if(i == 0)
+          {
+            rv_slider();
+            //           $(".recently-view-products .recently-view-main .recently-view-list").prepend("<div class='pro-info-rv rv-pro-info'></div>");
+            $(".recently-view-products .recently-view-main .recently-view-list").prepend("<div class='pro-info-rv '></div>");
+            $(".recently-view-products .recently-view-main .recently-view-list .pro-info-rv").hide();
+          }
+        }
+        else{
+        	if(rv.length == 1)
+            {
+            	$(".recently-view-products").hide();
+            }
+        }
+      }
+    }
+    }
+
+    $('body').on('mouseenter',".recently-view-products .recently-view-list li",function(){
+      //     	let info = $(this).children(".rv-pro-info").html();
+      let info = $(this).html();
+      //       alert(info);
+      let index = $(this).index(".recently-view-products .recently-view-list li.slick-active");
+      $(".recently-view-products .recently-view-main .recently-view-list .pro-info-rv").html(info).css("margin-top",index * $(this).outerHeight()).css("display","flex");
+    });
+
+
+    $('body').bind(".recently-view-products .recently-view-list .pro-info-rv").on('mouseover',".recently-view-products .recently-view-list .pro-info-rv",function(){
+
+      $(this).css("display","flex");
+    });
+
+    $('body').bind(".recently-view-products .recently-view-list .pro-info-rv").on('mouseleave',".recently-view-products .recently-view-list .pro-info-rv",function(){
+
+      $(this).html("").hide();
+    });
+
+    //     top
+    var top = $('.recently-view-products .rv-top');
+    top.click(function(){
+      //       $('.recently-view-products .rv-toptop').fadeOut();
+
+      $('html, body').animate({
+        scrollTop: 0
+      }, 400);
+      $(window).scroll(function(e){ e.preventDefault()});
+
+      return false;
+    });
+
+    $(window).scroll(function(){
+
+      if($(window).scrollTop() >= 40 ) {
+        $('.recently-view-products .rv-toptop').fadeIn();
+        $('.recently-view-products .rv-cart').fadeIn();
+      }
+      else{
+        $('.recently-view-products .rv-toptop').fadeOut();  
+        $('.recently-view-products .rv-cart').fadeOut();
+      }
+    });
+
+    $('.recently-view-products .rv-toptop').fadeOut();
+    $('.recently-view-products .rv-cart').fadeOut();
+
+
+
+
+    $(".recently-view-products .recently-view-main .rv-slided-btn").click(function(){
+      $(".recently-view-products .recently-view-main").addClass("rv-disappear");
+
+      $(".recently-view-products").addClass("rv-pro-show");
+      $(".recently-view-products .recently-view-main .rv-slided-btn").hide();
+    });
+
+    $(".recently-view-products .rv-appered-btn").click(function(){
+      $(".recently-view-products .recently-view-main").removeClass("rv-disappear");
+
+      $(".recently-view-products").removeClass("rv-pro-show");
+      $(".recently-view-products .recently-view-main .rv-slided-btn").show();
+    });
+
+
+    function rv_slider(){
+
+      //       console.log("rv len =" + $('.recently-view-main .recently-view-list li').length);
+      if($('.recently-view-main .recently-view-list li').length >=3)
+      {
+        $('.recently-view-main .recently-view-list').removeClass("rv-manage");
+      }
+
+      if($('.recently-view-main .recently-view-list li').length > 3)
+      {
+        $('.recently-view-main .recently-view-list').removeClass("rv-manage-padd");
+      }
+
+      $('.recently-view-main .recently-view-list').slick({
+        vertical:true,
+        verticalSwiping:true,
+        prevArrow:'<button class="qv-arrow rv-prev"><i class="fa fa-angle-left"></i></button>',
+        nextArrow:'<button class="qv-arrow rv-next"><i class="fa fa-angle-right"></i></button>',
+        dots: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false
+            }
+          }
+        ]
+
+      });
+
+    }
+
+  });
+</script>

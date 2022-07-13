@@ -1,0 +1,288 @@
+<style>
+  .filter-input-hide{display:none;}
+  
+  .filter-main-block form label{position:relative;cursor:pointer;}
+  .filter-main-block form .filter-selector-default label{left:-5px;padding-left:5px;}
+  
+  .filter-main-block form input{cursor:pointer;}
+  
+  .filter-main-block ul{display:flex;flex-direction:column;list-style-type:none;}
+  .filter-main>li{margin:0 10px 20px;}
+  .filter-main .filter-grp-head{border-bottom: 1px solid #0000000f;padding-bottom: 10px;}
+  
+/*  color   */
+  .filter-main-block .filter-selector.filter-selector-color{flex-direction: row;flex-wrap:wrap;}
+  .filter-main-block .filter-selector.filter-selector-color label{width: 34px;height: 34px;border-radius: 50%;box-shadow:0 0 10px 3px #8080803d;}
+  .filter-main-block .filter-selector.filter-selector-color>.filter-item{padding:10px 10px 5px 0;}
+  
+  .filter-main-block .filter-selector input[type=checkbox]+label:after{content:"";position:absolute;top:0;left:0;transform:rotate(-45deg) scale(0);height:7px;width:13px;border:2px solid #ffffff;border-top: none;border-right: none;transition: all 0.3s;opacity:0;}
+  
+  .filter-main-block .filter-selector.filter-selector-color input[type=checkbox]+label:after{top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);}
+  .filter-main-block .filter-selector.filter-selector-color input[type=checkbox]+label.white:after{border-color:black}
+  .filter-main-block .filter-selector.filter-selector-color input[type=checkbox]:checked+label:after{opacity:1;transform:translate(-50%,-50%) rotate(-45deg) scale(1);}
+  
+  
+/*  size  */
+  .filter-main-block .filter-selector.filter-selector-size{flex-direction: row;flex-wrap:wrap;}
+  .filter-main-block .filter-selector.filter-selector-size .filter-item{padding:10px 10px 5px 0;}
+  .filter-main-block .filter-selector .filter-item.filter-item-disable{opacity:0.5;}
+  .filter-main-block .filter-selector.filter-selector-size label span{padding: 2px 15px;border: 1px solid #80808075;}
+  
+  .filter-main-block .filter-selector.filter-selector-size input[type=checkbox]:checked+label span{border-color:black;}
+  
+  
+
+  .price-range-slider {width: 100%;float: left;padding: 10px 20px 10px 0;}
+  .price-range-slider .range-value {margin: 0 0 5px;;display:flex;justify-content:space-between;}
+  .price-range-slider .range-value input {width: 100%;background: none;color: #000;font-size: 16px;font-weight: initial;box-shadow: none;border: none;margin: 0;;}
+  
+  .price-range-slider .range-value input.range-max{text-align:right;}
+  .price-range-slider .range-value label{display:flex;}
+  
+  .price-range-slider .range-value input{display:none;}
+  
+  .price-range-slider .range-bar {border: none;background: #000;height: 3px;width: 96%;margin-left: 8px;}
+  .price-range-slider .range-bar .ui-slider-range {background: #06b9c0;}
+  .price-range-slider .range-bar .ui-slider-handle {border: none;border-radius: 25px;background: #fff;border: 2px solid #06b9c0;height: 17px;width: 17px;top: -0.52em;cursor: pointer;}
+  .price-range-slider .range-bar .ui-slider-handle + span {background: #06b9c0;}
+  .price-range-slider .range-bar .ui-slider-handle{display:inline-block;}
+  
+/* refine by   */
+  .filter-active-block{padding-bottom:20px;}
+  .filter-active-block .filter-active-head{display:flex;justify-content:space-between;}
+  .filter-active-block .filter-active-remove-all{border:none;background:none;text-decoration:underline;font-size:15px;}
+  .filter-active-block .filter-active-head{padding-right:20px;}
+  
+  .filter-active-block .filter-active-list{display:flex;flex-wrap:wrap;}
+  .filter-active-block .filter-active-item{width:fit-content;position:relative;padding: 3px 25px 3px 5px;background: black;color: white;margin-right:10px;margin-bottom:10px;}
+  
+  .filter-active-block .filter-active-item::before,.filter-active-block .filter-active-item::after{content:"";position:absolute;width:2px;height:50%;background:white;}
+  .filter-active-block .filter-active-item::before{right: 12px;top: 50%;transform: translateY(-50%) rotate(-45deg);}
+  .filter-active-block .filter-active-item::after{right: 12px;top: 50%;transform: translateY(-50%) rotate(45deg);}
+  
+  .filter-main-block .main-sort-by{padding-bottom:20px;padding-right:20px;display:none;}
+  .filter-main-block .main-sort-by .filter-sort_by-head{display: flex;justify-content: space-between;align-items: center;}
+  .filter-main-block .main-sort-by .filter-sort_by-head .result-counter{font-size:15px;}
+  .filter-main-block .main-sort-by select{width:100%;}
+
+
+  .product-grid-wrapper .main-sort-by{display:flex;align-items:center;}
+  .product-grid-wrapper .main-sort-by .filter-sort_by-head{margin-right:10px;}
+  .product-grid-wrapper .product-grid-function-top{display:flex;justify-content:space-between;padding:0 0 10px;}
+  
+  @media(max-width:1200px){
+    .filter-main-block .filter-selector.filter-selector-color>.filter-item{padding:5px 10px 5px 0;}
+    .filter-main-block .filter-selector.filter-selector-color label{width:22px;height:22px;}
+    .main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper{width:70%;}
+    .main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper .row>.col-3{width:33.33%;}
+    .main-wrapper.main-wrapper-filter-vertical .main-filter-block-wrapper{width:30%;}
+  }
+  
+  @media(max-width:991px){
+  	.main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper{width:60%;}
+    .main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper .row>.col-3{width:50%;}
+    .main-wrapper.main-wrapper-filter-vertical .main-filter-block-wrapper{width:40%;}
+  }
+  @media(max-width:767px){
+    .main-wrapper .main-filter-block-wrapper.filter-wrapper-vertical{display:none;}
+    .main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper{width:100%;}
+    .main-wrapper.main-wrapper-filter-vertical .product-grid-wrapper .row>.col-3{width:33.33%;}
+  }
+</style>
+{%- liquid
+  
+  if results.url
+    assign results_url = results.url
+  else
+    assign terms = results.terms | escape
+    assign results_url = '?q=' | append: terms 
+  endif
+-%}
+<div class="filter-main-block">
+  <form action="{{ routes.search_url }}">
+    {%- if results.terms -%}
+    <input type="hidden" name="q" value="{{ results.terms | escape }}">
+    <input name="type" type="hidden" value="last">
+    {% endif %}
+    
+    {% if filter_type == "vertical" %}
+    {% assign collection = results %}
+    <div class="main-sort-by">
+      <h5 class="filter-sort_by-head">
+        <span>Sort By</span>
+        <span class="result-counter">{{ collection.products_count }} Products</span>
+      </h5>
+      {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
+      <select name="sort_by" id="SortBy" class="filters-toolbar__input hidden"  data-select-input>
+        {%- for option in collection.sort_options -%}
+        <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>{{ option.name | escape }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+    {% endif %}
+
+<!--  history    -->
+
+    <div class="filter-active-block" style="display:none;">
+      <h5 class="filter-active-head filter-grp-head"><span class="filter-active-head-text">Refine By</span><a href="{{ results_url }}" class="filter-active-remove-all">Remove All</a></h5>
+      <div class="filter-active-list">
+
+        {%- for filter in results.filters -%}
+        
+        {% for value in filter.active_values %}
+
+        <a class="filter-active-item" data-id="filter-{{ filter.label }}-{{ value.label }}" href="{{ value.url_to_remove }}">{{ value.label }}</a>
+         {% endfor %}
+        {% if filter.type == "price_range" %}
+        {%- if filter.min_value.value != nil or filter.max_value.value != nil %}
+       {%- if filter.min_value.value > 0 or filter.max_value.value < filter.range_max %}
+        <a class="filter-active-item price" data-id="filter-{{ filter.label }}-{{ value.label }}" href="{{ filter.url_to_remove }}" data-min="{{ filter.min_value.value }}" data-max="{{ filter.range_max }}">
+          {%- if filter.min_value.value -%}{{ filter.min_value.value | money }} {%- else -%}{{ 0 | money }} {%- endif -%}
+           - &nbsp;
+          {%- if filter.max_value.value -%} {{ filter.max_value.value | money }}{%- else -%} {{ filter.range_max | money }}{%- endif -%}
+        </a>
+       {% endif %}
+        {% endif %}
+        {% endif %}
+
+       
+        {% endfor %}
+      </div>
+    </div>
+
+    <ul class="filter-main">
+
+      {%- for filter in results.filters -%}
+      <li class="filter-item-grp" data-type="{{ filter.label }}">
+       
+        <h5 class="filter-grp-head" >{{ filter.label }}
+        {% render 'caret-icon' %}
+        </h5>
+        {% assign label = filter.label | downcase %}
+        
+<!-- price range -->
+
+        {% if filter.type == 'price_range' %}
+        
+        <ul class="filter-selector filter-selector-default price-range-slider">
+          <p class="range-value">
+            <label class="range-min-label" id="filter-{{ filter.label | escape }}-GTE-label">
+              {{ cart.currency.symbol }}
+              <span>
+                {%- if filter.min_value.value -%}
+                {{ filter.min_value.value | money_without_currency | replace: ',' | replace:'.' | replace:' '  }}
+                {% else %}
+                0 
+                {% endif %}
+              </span>
+            </label>
+            <input class="price-range range-min" type="number" name="{{ filter.min_value.param_name }}" 
+                   {%- if filter.min_value.value > 0 -%}
+                   value="{{ filter.min_value.value | money_without_currency | replace: ',' | replace:'.' | replace:' '  }}" 
+                   {% endif %}
+                   type="number"
+                   id="filter-{{ filter.label | escape }}-GTE"
+                   min="0"
+                   max="{{ filter.range_max | money_without_currency | replace: ',' | replace:'.' | replace:' ' }}" >
+            
+            <label class="range-min-label" id="filter-{{ filter.label | escape }}-LTE-label">
+              {{ cart.currency.symbol }}
+              <span>
+                {%- if filter.max_value.value -%}
+                {{ filter.max_value.value | money_without_currency | replace: ',' | replace:'.' | replace:' '  }}
+                {% else %}
+                {{ filter.range_max | money_without_currency | replace: ',' | replace:'.' | replace:' '  }}
+                {% endif %}
+              </span>
+            </label>
+            <input class="price-range range-max" type="text" name="{{ filter.max_value.param_name }}" 
+                   {%- if filter.max_value.value -%}
+                   value="{{ filter.max_value.value | money_without_currency | replace: ',' | replace:'.' | replace:' '  }}"
+                   
+                   {% endif %}
+                   type="number"
+                   id="filter-{{ filter.label | escape }}-LTE"
+                   min="0"
+                   max="{{ filter.range_max | money_without_currency | replace: ',' | replace:'.' | replace:' ' }}" >
+          </p>
+          <div id="slider-range" class="range-bar"></div>
+        </ul>
+        
+        
+        {% else %}
+        
+		<!-- color -->
+        {% if label == 'colour' or label == 'color' %}
+        <ul class="filter-selector filter-selector-color">
+          
+          {% for value in filter.values %}
+          {% assign colorvalue = value.value | downcase | remove:" " %}
+          {% assign color = settings.colorcode | split:"||" %}
+          {% for clr in color %}
+          {% assign col = clr | downcase | split:"|" %}
+          
+          {% if colorvalue == col[0] %}
+          {% assign colorvalue = col[1] %}
+          {% break %}
+          {% endif %}
+          {% endfor %}
+          
+          <li class="filter-item {{ value.count }}">
+            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" id="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" class="filter-input-hide" {% if value.active %}checked{% endif %}>
+            <label for="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" class="filter-label {{ value.value | downcase }}" style="background:{{ colorvalue }}"><span class="filter-label-text filter-input-hide">{{ value.label }}</span></label>
+          </li>
+          {% endfor %}
+        </ul>
+        
+        <!-- size -->
+        {% elsif label == 'size' %}
+        <ul class="filter-selector filter-selector-size">
+          
+          {% for value in filter.values %}
+          <li class="filter-item">
+            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" id="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" class="filter-input-hide" {% if value.active %}checked{% endif %}>
+            <label for="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" class="filter-label"><span class="filter_check">{{ value.label }}</span></label>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        
+        <ul class="filter-selector filter-selector-default">
+          
+          {% for value in filter.values %}
+          <li class="filter-item">
+            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" id="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" {% if value.active %}checked{% endif %}>
+            <label for="filter-{{ filter.label | handleize }}-{{ value.label | handleize }}" class="filter-label"><span class="filter_check">{{ value.label }}</span></label>
+          </li>
+          {% endfor %}
+        </ul>
+        
+        {% endif %}
+        {% endif %}
+      </li>
+      {% endfor %}
+      
+      {% comment %}
+      {% if template == "collection" %}
+      <li class="filter-item-grp">
+        <h5 class="filter-grp-head" >Products Tags
+        {% render 'caret-icon' %}
+        </h5>
+        <ul class="filter-selector filter-selector-default">
+          {% for tag in collection.all_tags %}
+          <li class="tag-filter-item">
+            {% comment %}
+            <input type="checkbox" value="{{ tag | downcase }}" id="filter-protag-{{ tag | handleize }}-{{ tag | handleize }}">
+            <label for="1filter-protag-{{ tag | handeize }}-{{ tag | handleize }}" data-value="{{ tag | downcase }}" class="filter-label"><span class="filter_check">{{ tag }}</span></label>
+            {% endcomment %}
+            <button data-value="{{ tag | downcase }}" class="pro-tag-btn">{{ tag }}</label>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endif %}
+      {% endcomment %}
+    </ul>
+    
+  </form>
+</div>

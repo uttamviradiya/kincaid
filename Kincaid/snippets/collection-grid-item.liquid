@@ -1,0 +1,26 @@
+{% if collection.image %}
+{%- assign collection_image = collection.image -%}
+{% elsif collection.products.first and collection.products.first.media != empty %}
+{%- assign collection_image = collection.products.first.featured_media.preview_image -%}
+{% else %}
+{% assign collection_image = blank %}
+{% endif %}
+
+<div class="collection-grid-item">
+  <a href="{% if collection.products == empty %}#{% else %}{{ collection.url }}{% endif %}" class="collection-grid_link">
+    {% unless collection_image == blank %}
+    <figure>
+      <img src="{{ collection_image }}">
+    </figure>
+    {% else %}
+    {% if collection == empty %}
+    <div>No Collection Found..</div>
+    {% endif %}
+    {% endunless %}
+    <div class="collection-grid_title">
+      <div class="collection-grid_title">
+        {{ collection.title }}
+      </div>
+    </div>
+  </a>
+</div>

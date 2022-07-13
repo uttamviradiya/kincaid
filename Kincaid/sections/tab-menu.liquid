@@ -1,0 +1,1420 @@
+<style>
+  {% comment %}
+  
+  .section-tab-menu .tab{display: none;}
+  .section-tab-menu .tab-active{display: block;}
+  /*   .active-ans{display:block !important;} */
+  .section-tab-menu .tab-menu-list .active-a{color:white !important;background:var(--default3);transition:0.3s;}
+  .section-tab-menu{padding:35px 0;}
+  .section-tab-menu .page-width{max-width: 1030px;margin: 0 auto;padding: 0 15px;}
+  .section-tab-menu .tab-head{margin:0;text-align:center;margin-bottom: 15px;}
+  .section-tab-menu .tab-menu-list{margin-bottom:25px;}
+  .section-tab-menu .tab-menu-list ul{display:flex;margin:0;justify-content:center;padding:0;flex-wrap:wrap;}
+  .section-tab-menu li{list-style-type: none;}
+  .section-tab-menu .tab-menu-list ul li {text-align:center;border: 1px solid #8080804d; padding: 15px;min-width:225px; margin: 0 10px;border-radius:40px;font-weight: 700;text-transform:capitalize;cursor: pointer;margin-bottom:15px;}
+  .section-tab-menu .pro-block ul{padding:0;margin:0;display:flex;}
+  .section-tab-menu .pro-block ul li{margin:15px 0;padding:0 15px;}
+  .section-tab-menu .pro-block p{margin:0;}
+  
+     .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure figcaption{opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li:hover .pro-img-block figure .pro-link-top .pro-quick-view{opacity:1;visibility:visible;}
+  
+  .section-tab-menu .pro-block .pro-li .pro-img-block:hover  figure .img2{display:block;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block:hover  figure .img1{display:none;}
+  
+.section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view.qv-active{opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure{height:445px;position:relative;}
+/*   .section-tab-menu .pro-block .pro-li .pro-img-block figure:hover figcaption{opacity:1;} */
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .figure-a{width:100%;height:100%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure img{object-position:top;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .img2{display:none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption{position:absolute;bottom:0;width:100%;transition:0.3s;background:var(--default2);padding-bottom:15px; opacity:1;visibility:visible;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c{border:1px solid var(--default);background:var(--default2);color:var(--default3);min-width:100%;margin:0;width:100%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c:hover{background:var(--default3);color:var(--default2);}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-a2c.a2c-disabled{opacity: 0.5;pointer-events: none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption form .select-variant-select{display:none}
+  
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block{text-align:center;display:none;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block.show{display:block;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close{border:none;background:none;outline:none;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close svg{width:12px;height:12px;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .close-block{text-align:end;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list{display: flex;flex-wrap: wrap;justify-content: center;padding:10px 0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list a{width:fit-content;margin:0 10px;}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.selected{border-bottom:1px solid var(--default3);}
+.section-tab-menu .pro-block .pro-li .pro-img-block figure figcaption .pro-variant-block .variant-list .size-var.disabled{color: #8080806b;}
+  
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top{position:absolute;top:0;right:0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top >div{padding:10px 10px 0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .pro-quick-view{visibility:hidden;opacity:0;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .a-btn {text-align:center;width:30px;height:30px;border:1px solid grey;border-radius:50%;}
+  .section-tab-menu .pro-block .pro-li .pro-img-block figure .pro-link-top .a-btn svg{width:15px;}
+  
+  .section-tab-menu .pro-block .pro-li .pro-info-block{display: flex;flex-direction: column;align-items: center;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-vendor{color:#969696}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-title{text-align:center;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .compare{color:#969696;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-price .original.comapre-avail{color:var(--primary)}
+
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label{display: inline-block;padding: 10px;cursor: pointer;position: relative;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1.5px #e9e9e9;margin:3px;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant label:hover .tooltip1{display:block}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .active{box-shadow:0 0 0 1.5px #000 !important;border:3px solid white;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant input[type=radio]{overflow: hidden;position: absolute;height: 1px;width: 1px;visibility:hidden;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1{display:none;text-align: center;background: var(--default3);color: var(--default2);bottom: 100%;padding: 4px 7px;position: absolute;z-index: 2;min-width: 44px;left: 50%;transform: translate(-50%);margin-bottom: 12px;transition: all .25s ease-out;box-shadow: 2px 2px 6px #00000047;}
+  .section-tab-menu .pro-block .pro-li .pro-info-block .pro-variant .tooltip1::after{border-left: solid transparent 7px;border-right: solid transparent 7px;border-top: solid var(--default3) 7px;bottom: -7px;content: " ";height: 0;left: 50%;transform: translate(-50%);position: absolute;width: 0;}
+  
+  {% endcomment %}
+    #section-faq-tab-{{ section.id }} .tab-menu-list ul li{border: 2px solid {{ section.settings.head_color }};color:{{ section.settings.head_color }};}
+
+  #section-faq-tab-{{ section.id }} .faq-tab-btn-block .btn-content a{color:{{ section.settings.text_color }};}
+
+</style>
+
+
+
+
+
+<section class="section-tab-menu" id="section-tab-menu-{{ section.id }}">
+  <div class="container">
+    {% if section.settings.head != blank %}
+    <h1 class="tab-head" style="color:{{ section.settings.head_color }}">
+      {{ section.settings.head }}
+    </h1>
+    {% endif %}
+    <div class="tab-menu-list" >
+      <ul>
+        {% for block in section.blocks %}
+        {% if block.type == 'text' and block.settings.title != blank %}
+        <li class="tab-a" id="{{ forloop.index  }}">{{ block.settings.title }}</li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% for block in section.blocks %}
+    {% if block.type=="text" and block.settings.title != blank  %}
+
+    <div class="tab" id="tab{{forloop.index}}">
+
+      {% assign i = forloop.index %}   
+      {% assign a = 0 %}
+      {% for block in section.blocks %}
+      {% if forloop.index >= i %}
+
+      {% if block.settings.title != blank and a == 0 %}
+      {% assign a = 1 %}
+      {% elsif block.settings.title != blank and a == 1 %}
+      {% break %}
+      {% else %}
+      <div class="pro-block">
+        <ul class="pro-block-slider">
+          {% if block.settings.pro1 != blank %}
+          <li class="pro-li">
+          
+            {% assign product = block.settings.pro1 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro2 != blank %}
+          <li class="pro-li">
+           
+                        {% assign product = block.settings.pro2 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro3 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro3 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro4 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro4 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+
+          {% if block.settings.pro5 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro5 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+          {% if block.settings.pro6 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro6 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+          {% if block.settings.pro7 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro7 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                       <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+          {% if block.settings.pro8 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro8 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+          {% if block.settings.pro9 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro9 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                 {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+          {% if block.settings.pro10 != blank %}
+          <li class="pro-li">
+            
+                        {% assign product = block.settings.pro10 %}
+            <div class="pro-img-block">
+              <figure>
+                <a class="figure-a" href="{{ product.url }}">
+                <img class="img1" src="{{ product.featured_image | img_url:"master" }}">
+                  {% for img in product.images %}
+                  {% if forloop.length == 1 %}
+                  <img class="img2" src="{{ product.featured_image | img_url:"master" }}">
+                  {% else %}
+                  {% if forloop.index == 2 %}    
+                  <img class="img2" src="{{ img | img_url:"master" }}">
+                  {% endif %}
+                  {% endif %}
+                  {% endfor %}
+                </a>
+                <figcaption>
+                  {% capture color %}<p id="color"></p>{% endcapture %}
+                  <button class="btn pro-a2c pro-a2c1" id="a2c" type="submit" name="add">Add to Cart</button>
+                  <div class="pro-variant-block">
+                    <div class="close-block">
+                      <button class="close">
+                        {% render "close-icon" %}
+                      </button>
+                    </div>
+                    <div class="variant-block">
+                      <p class="selected-var">
+                        Size: 
+                      </p>
+                      <div class="variant-list"> 
+                      </div>
+                        
+                      <form  method="post" class="product-form" id="add-to-cart-{{ product.id }}">
+                        <select class="select-variant-select" name="id">
+                          {% for variant in product.variants %}
+                          <option value="{{ variant.id }}"
+                                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                                  >
+                            {{ variant.title }} - {% if variant.available == false %}soldout{% endif %}
+                          </option>
+                          {% endfor %}
+                        </select>
+                        <input type="hidden" class="q" name="quantity" value="1">
+                        <input type="button" name="add" value="Submit" class="btn btn--purchase  pro-a2c" onclick="a('add-to-cart-{{ product.id }}')">
+                      </form>
+                    </div>
+                  </div>
+                </figcaption>
+                <div class="pro-link-top">
+                  
+                  <div class="pro-wishlist">
+                    <a href="javascript:void(0)" title="Wishlist" class="a-btn wishlist-btn" data-handle="{{product.handle}}">
+                      {% render 'wishlist-icon' %}
+                    </a>
+                  </div>
+                  
+                <div class="pro-quick-view">
+                  <a class="quick-btn a-btn" href="javascript:void(0)" title="Quick View">
+                    {%  render 'icon-eye' %}
+                   </a>  
+                    {% render 'quick-view' , product:product %}
+ 
+                </div>
+                </div>
+              </figure>
+            </div>
+            <div class="pro-info-block">
+              
+              <a href="/collections/{{ product.vendor }}/" class="pro-vendor">
+                {{ product.vendor }}
+              </a>
+              <a href="" class="pro-title" >
+                {{ product.title }}
+              </a>
+              <h6 class="pro-price">
+                {% if product.compare_at_price != blank %}
+                <span class="compare"><s>{{ product.compare_at_price | money_without_trailing_zeros }}</s></span>
+                {% endif %}
+                <span class="original {% if product.compare_at_price != blank %}comapre-avail {% endif %}">{{ product.price | money_without_trailing_zeros }}</span>
+              </h6>
+              <div class="pro-variant">
+                {%- for option in product.options_with_values -%}
+                {% if option.name == 'Color' or option.name == "Colour" %}
+                {%- for value in option.values -%}
+                <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                       name="{{ option.name }}"
+                       value="{{ value | escape }}"
+                       form="{{ product_form_id }}"
+                       {% if forloop.first %}checked="checked"{% endif %}
+                       >
+                <label  for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" style="background:{{ value | downcase }};" data-value="{{ value | downcase }}" data-handle="{{ product.handle }}">
+                  <div class="tooltip1">{{ value | capitalize }}</div>
+                </label>
+                {%- endfor -%}
+                {% endif %}
+                {%- endfor -%}
+              </div>
+            </div>
+            
+          </li>
+          {% endif %}
+
+        </ul>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </div>  
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+<!-- {{ "main.js" | asset_url | script_tag }} -->
+<script>
+
+// $(document).ready(function(){
+  
+//   $(".tab-menu-list .tab-a").first().addClass("active-a");
+//   $(".section-tab-menu .tab").first().addClass("tab-active");
+//   $('.tab-menu-list .tab-a').click(function(){  
+
+//     $(".section-tab-menu .tab").removeClass('tab-active');
+
+//     $(".section-tab-menu #tab"+$(this).attr('id')+"").addClass("tab-active");
+
+//     $(".tab-menu-list .tab-a").removeClass('active-a');
+
+//     $(this).addClass('active-a');
+//   });
+
+//   //     $(".pro-block-slider").slick({
+//   //       infinite: true,
+//   //   slidesToShow: 4,
+//   //   slidesToScroll: 1
+//   //     });
+
+
+//   //add to cart open
+//   $(".pro-img-block .pro-a2c1").click(function(){
+
+//     $(this).hide();
+//     $(this).parent().children(".pro-variant-block").addClass("show");
+//   });
+
+//   $(".pro-variant-block .close").click(function(){
+//     $(this).parents(".pro-variant-block").removeClass("show");
+//     $(this).parents("figcaption").children(".pro-a2c").show();
+//   });
+  
+//   //size
+// $('.variant-list').on('click', '.size-var', function() {
+// //   $(".variant-list .size-var").click(function(){
+   
+//     $(".variant-list .size-var").removeClass("selected");
+//     $(this).addClass("selected");
+    
+//   var var_id = $(this).attr("data-id");
+//     $(".select-variant-select").val(var_id);
+  
+//   if($(this).hasClass("disabled"))
+//   {
+//     $(".product-form .btn--purchase").addClass("a2c-disabled");
+//   }
+//   else
+//   {
+//   	$(".product-form .btn--purchase").removeClass("a2c-disabled");
+//   }
+//   });
+
+
+//   $(".select-variant-select ").change(function(){
+    
+//     alert($(this).val());
+//   });
+// });
+
+
+// //quick view
+// $(".pro-quick-view .quick-btn").click(function(ev){
+// //   $(".pro-li").off().hover();
+//   $(".quick-view-main").css("display","flex");
+//   $("body").css("overflow","hidden");
+//   $(".pro-link-top .pro-quick-view").addClass("qv-active");
+  
+//   $(".qv-pro-variant-inner label").first().trigger("click");
+   
+//   $('.product-media-slider-single').slick('unslick');
+//   $('.product-media-slider-multi').slick('unslick');
+//   qv_slider();
+  
+  
+  
+// });
+  
+//   function qv_slider(){
+//     $('.product-media-slider-single').slick({
+//       slidesToShow: 1,
+//       slidesToScroll: 1,
+//       arrows: false,
+//       fade: true,
+//       asNavFor: '.product-media-slider-multi',
+//       prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+//       nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>'
+
+
+//     });
+//     $('.product-media-slider-multi').slick({
+//       slidesToShow: 4,
+//       slidesToScroll: 1,
+//       arrows: true,
+//       asNavFor: '.product-media-slider-single',
+//       prevArrow:'<button class="qv-arrow qv-prev"><i class="fa fa-angle-left"></i></button>',
+//       nextArrow:'<button class="qv-arrow qv-next"><i class="fa fa-angle-right"></i></button>',
+//       focusOnSelect: true,
+//       responsive: [
+//         {
+//           breakpoint: 1201,
+//           settings: {
+//             slidesToShow: 3,
+//             slidesToScroll: 1,
+//             infinite: true,
+//             arrows: true
+//           }
+//         }
+//       ]
+//     });
+//   }
+
+// $(".quick-view-main .qv-btn-close").click(function(e){
+//   e.stopPropagation();
+//   $(".quick-view-main").css("display","none");
+//   $("body").css("overflow","auto");
+//   $(".pro-link-top .pro-quick-view").removeClass("qv-active");
+// });
+
+  
+
+//   //ajax
+
+function a(form_id) {
+console.log("form_id="+ form_id);
+alert($('#'+form_id).serialize());
+ $.ajax({
+    type: 'POST', 
+    url: '/cart/add.js',
+    dataType: 'json', 
+    data: $('#'+form_id).serialize(),
+    success: addToCartOk,
+    error: addToCartFail
+  });
+}
+
+function addToCartOk(product) { 
+ alert("true");
+} 
+
+function addToCartFail(obj, status) { 
+  alert("false");
+} 
+
+    
+</script>  
+
+
+
+{% schema %}
+ {
+    "name": "Tab Menu",
+    "settings": [
+        {
+            "type": "text",
+            "id": "head",
+            "label": "Heading",
+            "default":"Heading"
+        },
+        
+        {
+            "type":"color",
+            "id":"head_color",
+            "label":"Heading Color",
+            "default":"#1666ba"
+        },
+        {
+            "type":"color",
+            "id":"text_color",
+            "label":"Text Color",
+            "default":"#000000"
+        },
+        {
+            "type":"color",
+            "id":"btn_back",
+            "label":"Button Background Color",
+            "default":"#368ce7"
+        },
+        {
+            "type":"color",
+            "id":"btn_text",
+            "label":"Button Text Color",
+            "default":"#ffffff"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Tab Title",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Tab Title"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "name": "Products",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "pro1",
+                    "label": "Product1"
+                },
+                {
+                    "type": "product",
+                    "id": "pro2",
+                    "label": "Product2"
+                },
+                {
+                    "type": "product",
+                    "id": "pro3",
+                    "label": "Product3"
+                },
+                {
+                    "type": "product",
+                    "id": "pro4",
+                    "label": "Product4"
+                },
+                {
+                    "type": "product",
+                    "id": "pro5",
+                    "label": "Product5"
+                },
+{
+                    "type": "product",
+                    "id": "pro6",
+                    "label": "Product6"
+                },
+                {
+                    "type": "product",
+                    "id": "pro7",
+                    "label": "Product7"
+                },
+                {
+                    "type": "product",
+                    "id": "pro8",
+                    "label": "Product8"
+                },
+                {
+                    "type": "product",
+                    "id": "pro9",
+                    "label": "Product9"
+                },
+                {
+                    "type": "product",
+                    "id": "pro10",
+                    "label": "Product10"
+                }
+                
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Tab Menu"
+        }
+    ]
+}
+{% endschema %}

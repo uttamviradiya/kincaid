@@ -1,0 +1,233 @@
+{%- assign social_icons = false -%}
+{%- assign show_payment_icons = false -%}
+
+{%- if section.settings.show_payment_icons -%}
+{%- unless shop.enabled_payment_types == empty -%}
+{%- assign show_payment_icons = true -%}
+{%- endunless -%}
+{%- endif -%}
+
+{%- if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank
+  or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank
+or request.page_type == 'article' or request.page_type == 'blog' -%}
+{%- assign social_icons = true -%}
+{%- endif -%}
+{%- assign socials = "Facebook Twitter Pinterest Instagram Tumblr Snapchat YouTube Vimeo" | split: ' ' -%}
+
+<footer class="site-footer critical-hidden" role="contentinfo" data-section-id="{{ section.id }}" data-section-type="footer-section">
+  <div class="page-width">
+    <div class="row">
+      {%- for block in section.blocks -%}
+      <div class="col-12">
+        <div class="site-footer__item-inner site-footer__item-inner--{{ block.type }}">
+          {%- if block.settings.title -%}
+          <p class="h4">{{ block.settings.title | escape }}</p>
+          {%- endif -%}
+
+          {% case block.type %}
+          {% when 'menu' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+            <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <ul class="site-footer__menu">
+              {% for link in linklists[block.settings.menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          {% when 'text' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+            <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <div class="rte">{{ block.settings.richtext }}</div>
+          </div>
+
+          {% when 'newsletter' %}
+          <div class="grid__item {{ column_width }}">
+            {% if block.settings.title %}
+            <h3 class="site-footer__section-title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            <h3 class="site-footer__section-title">{{ 'general.newsletter_form.newsletter_heading' | t }}</h3>
+            {% form 'customer' %}
+            {{ form.errors | default_errors }}
+            {% if form.posted_successfully? %}
+            <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+            {% else %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label for="NewsletterEmail" class="newsletter-label">
+              {% if label %}
+              <div class="rte">{{ label }}</div>
+              {% else %}
+              {{ 'general.newsletter_form.newsletter_label' | t }}
+              {% endif %}
+            </label>
+            <div class="input-group">
+              <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="NewsletterEmail" class="input-group__field site-footer__newsletter-input" autocorrect="off" autocapitalize="off">
+              <div class="input-group__btn">
+                <button type="submit" class="btn" name="commit" id="Subscribe">
+                  <span {% if has_page_content %}class="medium-up--hide"{% endif %}>{{ 'general.newsletter_form.submit' | t }}</span>
+                  {% if has_page_content %}
+                  <span class="small--hide">{% include 'icon-arrow-right' %}</span>
+                  {% endif %}
+                </button>
+              </div>
+            </div>
+            {% endif %}
+            {% endform %}
+          </div>
+          {% endcase %}
+        </div>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">{{ payment_icon_markup }}</div>
+
+      <div class="grid__item {% if show_selectors or show_payment_icons %}one-half{% endif %} small--one-whole site-footer-item-tall">
+        {%- if social_icons -%}
+        <ul>
+          {%- for social in socials -%}
+          {%- assign social_link = social | prepend: 'social_' | append: '_link' | downcase -%}
+          {%- assign icon_link = social | prepend: 'icon-' | downcase -%}
+          {%- if settings[social_link] != blank -%}
+          <li>
+            <a href="{{ settings[social_link] | escape }}">{{ social }}</a>
+          </li>
+          {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- else -%}
+        <div class="small--hide site-footer-item-align-right {% if show_selectors or show_payment_icons %}site-footer-item-center-vertically{% endif %}">
+          <small class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}</small>
+          <small class="site-footer__copyright-content site-footer__copyright-content-powered-by">{{ powered_by_link }}</small>
+        </div>
+        {%- endif -%}
+      </div>
+
+      {%- if show_payment_icons -%}
+      <div class="{{ payment_width_class }}">{{ payment_icon_markup }}</div>
+      {%- endif -%}
+
+      <div>{{ payment_icon_markup }}</div>
+
+      <div class="{{ copyright_show_class }}">
+        <small class="">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}{{ powered_by_link }}</small>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+{% schema %}
+{
+"name": "Footer",
+"max_blocks": 4,
+"settings": [
+{
+"type": "header",
+"content": "Payment methods"
+},
+{
+"type": "checkbox",
+"id": "show_payment_icons",
+"label": "Show payment icons",
+"default": false
+},
+{
+"type": "header",
+"content": "Color"
+},
+{
+"type": "color",
+"id": "color_footer_bg",
+"label": "Background",
+"default": "#f6f6f6"
+},
+{
+"type": "color",
+"id": "color_footer_text",
+"label": "Text",
+"default": "#333232"
+},
+{
+"type": "header",
+"content": "Language Selector"
+},
+{
+"type": "checkbox",
+"id": "show_locale_selector",
+"label": "Show language selector",
+"default": true
+},
+{
+"type": "header",
+"content": "Currency Selector"
+},
+{
+"type": "checkbox",
+"id": "show_currency_selector",
+"label": "Show currency selector",
+"default": true
+}
+],
+"blocks": [
+{
+"type": "Menu",
+"name": "menu",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Quick links"
+},
+{
+"type": "link_list",
+"id": "menu",
+"label": "Menu",
+"default": "footer"
+}
+]
+},
+{
+"type": "text",
+"name": "Text",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Talk about your business"
+},
+{
+"type": "richtext",
+"id": "text",
+"label": "Text",
+"default": "<p>Share store details, promotions, or brand content with your customers.</p>"
+}
+]
+},
+{
+"type": "newsletter",
+"limit": 1,
+"name": "Newsletter signup",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"info": "Subscribers will be added to your “accepts marketing” [customer list.](/admin/customers?query=&accepts_marketing=1)",
+"default": "Newsletter"
+}
+]
+}
+]
+}
+{% endschema %}

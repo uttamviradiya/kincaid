@@ -1,0 +1,18 @@
+<div class="price price-listing {%- if product.availabl == false %} price-sold-out {% endif -%}">  
+  {% assign cprice = false %}
+  {% if product.compare_at_price > product.price %}  
+  {% assign cprice = true %}
+  {% endif %}
+  <div class="price_sale">
+    {% if cprice %}
+    <p class="price__compare"> 
+    <span>{{ product.price | money }}</span>
+    <span>{{ product.compare_at_price | money }}</span>
+    </p>
+    {% else %}
+    <span class="price_regular">
+      {{ product.price | money }}
+    </span>
+    {% endif %}
+  </div>
+</div>

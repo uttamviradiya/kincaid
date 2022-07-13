@@ -1,0 +1,22 @@
+{% style %}
+:root {
+--color-text: {{ settings.color_text }};
+--color-text-rgb: {{ settings.color_text | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+--color-body-text: {{ settings.color_body_text }};
+--color-sale-text: {{ settings.color_sale_text }};
+--color-small-button-text-border: {{ settings.color_small_button_text_border }};
+--color-text-field: {{ settings.color_text_field }};
+--color-text-field-text: {{ settings.color_text_field_text }};
+--color-text-field-text-rgb: {{ settings.color_text_field_text | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+--color-btn-primary: {{ settings.color_button }};
+--color-btn-primary-darker: {{ settings.color_button | color_darken: 10 }};
+--color-btn-primary-text: {{ settings.color_button_text }};
+}
+{% endstyle %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+{{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+{{ 'slick.css' | asset_url | stylesheet_tag }}
+
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+{{ 'all.css' | asset_url | stylesheet_tag }}
+{{ 'main.css' | asset_url | stylesheet_tag }}

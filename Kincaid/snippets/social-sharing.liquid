@@ -1,0 +1,17 @@
+<ul class="social-sharing">
+  {% if settings.share_facebook %}
+  <li>
+    <a target="_blank" href="//www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}" class="share-facebook"></a>
+  </li>
+  {% endif %}
+  {% if settings.share_twitter %}
+  <li>
+    <a target="_blank" href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}" class="share-twitter"></a>
+  </li>
+  {% endif %}
+  {% if settings.share_pinterest %}
+  <li>
+    <a target="_blank" href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | img_url: '1024x1024' }}&amp;description={{ share_title | url_param_escape }}" class="share-pinterest"></a>
+  </li>
+  {% endif %}
+</ul>

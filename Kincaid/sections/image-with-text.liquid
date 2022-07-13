@@ -1,0 +1,408 @@
+
+<style>
+  #image-with-text-{{ section.id }} .image-with-text-main { background:{{ section.settings.back }} }
+  {% if section.settings.img_left == true %}
+  #image-with-text-{{ section.id }} .image-with-text-main .row {flex-direction: row-reverse; }
+  {% endif %}
+  {% if section.settings.img_hover == true %}
+  #image-with-text-{{ section.id }} .image-with-text-main .img-block img { box-shadow:-25px 25px {{ section.settings.imgcolor1 }}; }
+  #image-with-text-{{ section.id }} .image-with-text-main .img-block.img-hover1 img { box-shadow:-25px 25px {{ section.settings.imgcolor2 }}; }
+  
+  @media (max-width:575px){
+  	#image-with-text-{{ section.id }} .image-with-text-main .img-block img { box-shadow:-15px 15px {{ section.settings.imgcolor1 }}; }
+  #image-with-text-{{ section.id }} .image-with-text-main .img-block.img-hover1 img { box-shadow:-15px 15px {{ section.settings.imgcolor2 }}; }
+  }
+  {% endif %}
+ 	
+  .section-content-{{ section.id }} .section-content { color:{{ section.settings.content_color }}; }
+  
+/*  heading  */
+   {% if section.settings.head_color == true %}
+  .section-content-{{ section.id }} .section-content .head { color:{{ section.settings.head_color1 }} }
+  .section-content-{{ section.id }} .section-content .head.head-hover { color:{{ section.settings.head_color2 }} }
+  {% endif %}
+  
+  {% if section.settings.head_back == true %}
+  .section-content-{{ section.id }} .section-content .head { background:linear-gradient(180deg, #ffffff00 35%, {{ section.settings.head_back1 }} 35%);  }
+  .section-content-{{ section.id }} .section-content .head.headback-hover { background:linear-gradient(180deg, #ffffff00 35%, {{ section.settings.head_back2 }} 35%);  }
+  {% endif %}
+  
+  {% if section.settings.head_shadow == true %}
+  .section-content-{{ section.id }} .section-content .head { text-shadow:4px 4px {{ section.settings.head_shadow1 }}  }
+  .section-content-{{ section.id }} .section-content .head.headshadow-hover { text-shadow:4px 4px {{ section.settings.head_shadow2 }}   }
+  @media (max-width:575px){
+  	.section-content-{{ section.id }} .section-content .head { text-shadow:2px 2px {{ section.settings.head_shadow1 }}  }
+  .section-content-{{ section.id }} .section-content .head.headshadow-hover { text-shadow:2px 2px {{ section.settings.head_shadow2 }}   }
+  }
+  
+  {% endif %}
+
+  
+/* btns   */
+   .section-content-{{ section.id }} .section-content .section-content-btns .btn { color:{{ section.settings.btn_text_color }} }
+   .section-content-{{ section.id }} .section-content .section-content-btns .btn:hover { color:{{ section.settings.btn_hover_color }} }
+  {% if section.settings.btn_back == true %}
+  .section-content-{{ section.id }} .section-content .section-content-btns .btn { background: {{ section.settings.btn_back1 }}; }
+  .section-content-{{ section.id }} .section-content .section-content-btns .btn.btnback-hover { background: {{ section.settings.btn_back2 }}; }
+  {% endif %}
+  
+  {% if section.settings.btn_shadow == true %}
+  .section-content-{{ section.id }} .section-content .section-content-btns .btn { box-shadow:8px 8px {{ section.settings.btn_shadow1 }}  }
+  .section-content-{{ section.id }} .section-content .section-content-btns .btn.btnshadow-hover { box-shadow:8px 8px {{ section.settings.btn_shadow2 }}   }
+  {% endif %}
+  
+/*  content design  */
+  {% if section.settings.content_design == true %}
+  #image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content::before { background:{{ section.settings.content_design2 }};}
+  #image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content::after { border: 70px solid {{ section.settings.content_design1 }};border-top-color: transparent;border-left-color: transparent; }
+  #image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content-primary::before {background:{{ section.settings.content_design2 }};}
+  
+  #image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content .image-with-text-content-inner::before {border:2px solid {{ section.settings.content_design2 }};}
+  #image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content .image-with-text-content-inner::after {border:2px solid {{ section.settings.content_design1 }};}
+  
+  @media (max-width:1440px){
+  	#image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content::after { border: 55px solid {{ section.settings.content_design1 }};border-top-color: transparent;border-left-color: transparent; }
+  }
+  
+  @media (max-width:1200px){
+  	#image-with-text-{{ section.id }} .image-with-text-main .image-with-text-content::after { border: 50px solid {{ section.settings.content_design1 }};border-top-color: transparent;border-left-color: transparent; }
+  }
+  {% endif %}
+  
+  .image-with-text-section .image-with-text-main .image-with-text-content , .image-with-text-section .image-with-text-main .image-with-text-content-primary { position:relative; height:100%; }
+
+  .image-with-text-section .image-with-text-main .image-with-text-content .image-with-text-content-inner {background:{{ section.settings.content_back }};}
+
+</style>
+
+
+<section class="image-with-text-section mb50 section-content-{{ section.id }}" id="image-with-text-{{ section.id }}">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+    <div class="section-header">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {% endif %}
+    <div class="image-with-text-main">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="image-with-text-content">
+            <div class="image-with-text-content-primary">
+              <div class="image-with-text-content-inner">
+                {% render 'section-content' %}
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="col-lg-6">
+          <figure class="img-block  {% if section.settings.img_hover == true %}img-block-hover{% endif %}" >
+            <img src="{{ section.settings.img | img_url:"1500x1500" }}">
+          </figure>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ 'theme.js' | asset_url | script_tag }}
+{{ 'jquery-ui.js' | asset_url | script_tag }}
+<script>
+  $(document).ready(function() {  
+
+    {% if section.settings.img_hover == true %}
+    setInterval(function() {
+      $('.image-with-text-main .img-block').addClass("img-hover1");
+      setTimeout(function(){
+        $('.image-with-text-main .img-block').removeClass("img-hover1");
+      },1000);
+    },2000);
+    {% endif %}
+    
+    //header
+    {% if section.settings.head_color == true %}
+    setInterval(function() {
+      $('.section-content-{{ section.id }} .section-content .head').addClass("head-hover");
+      setTimeout(function(){
+        $('.section-content-{{ section.id }} .section-content .head').removeClass("head-hover");
+      },1000);
+    },2000);
+    {% endif %}
+    
+    {% if section.settings.head_back == true %}
+    setInterval(function() {
+      $('.section-content-{{ section.id }} .section-content .head').addClass("headback-hover");
+      setTimeout(function(){
+        $('.section-content-{{ section.id }} .section-content .head').removeClass("headback-hover");
+      },1250);
+    },2500);
+    {% endif %}
+    
+     {% if section.settings.head_shadow == true %}
+    setInterval(function() {
+      $('.section-content-{{ section.id }} .section-content .head').addClass("headshadow-hover");
+      setTimeout(function(){
+        $('.section-content-{{ section.id }} .section-content .head').removeClass("headshadow-hover");
+      },1000);
+    },2000);
+    {% endif %}
+    
+    //btns
+    {% if section.settings.btn_back == true %}
+    setInterval(function() {
+      $('.section-content-{{ section.id }} .section-content-btns .btn').addClass("btnback-hover");
+      setTimeout(function(){
+        $('.section-content-{{ section.id }} .section-content-btns .btn').removeClass("btnback-hover");
+      },1250);
+    },2500);
+    {% endif %}
+    
+    {% if section.settings.btn_shadow == true %}
+    setInterval(function() {
+      $('.section-content-{{ section.id }} .section-content-btns .btn').addClass("btnshadow-hover");
+      setTimeout(function(){
+        $('.section-content-{{ section.id }} .section-content-btns .btn').removeClass("btnshadow-hover");
+      },1000);
+    },2000);
+    {% endif %}
+    
+    
+  });
+</script>
+
+
+
+{% schema %}
+{
+    "name": "Image with Text",
+    "settings": [
+		{
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Section Heading"
+        },        
+		{
+            "type": "color",
+            "id": "back",
+            "label": "Background Color",
+            "default": "#fadbda"
+        },
+        {
+            "type": "header",
+            "content": "Image Block"
+        },
+        {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+        },
+		{
+            "type": "checkbox",
+            "id": "img_left",
+            "label": "Image Left Side",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "img_hover",
+            "label": "Image Shadow Hover Over",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "imgcolor1",
+            "label": "Hover Color1",
+            "default": "#83d5dc"
+        },
+        {
+            "type": "color",
+            "id": "imgcolor2",
+            "label": "Hover Color2",
+            "default": "#ed4649"
+        },
+        {
+            "type": "header",
+            "content": "Headings and Content"
+        },
+        {
+            "type": "color",
+            "id": "content_color",
+            "label": "Text Color",
+            "default": "#000"
+        },
+        {
+            "type": "header",
+            "content": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "head",
+            "label": "Heading",
+            "default": "Heading"
+        },
+        {
+            "type": "checkbox",
+            "id": "head_color",
+            "label": "Heading Hover Over",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "head_color1",
+            "label": "Heading Color1",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "head_color2",
+            "label": "Heading Color2",
+            "default": "#000"
+        },
+        {
+            "type": "checkbox",
+            "id": "head_back",
+            "label": "Heading Background Hover Over",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "head_back1",
+            "label": "Heading Background Color1",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "head_back2",
+            "label": "Heading Background Color2",
+            "default": "#000"
+        },
+        {
+            "type": "checkbox",
+            "id": "head_shadow",
+            "label": "Heading Shadow Hover Over",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "head_shadow1",
+            "label": "Heading Shadow Color1",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "head_shadow2",
+            "label": "Heading Shadow Color2",
+            "default": "#000"
+        },
+        {
+            "type": "text",
+            "id": "sub_head",
+            "label": "Sub Heading",
+            "default": "Sub Heading"
+        },
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "Text"
+        },
+        {
+            "type": "header",
+            "content": "Buttons"
+        },
+        {
+            "type": "text",
+            "id": "btn1",
+            "label": "Button Name"
+        },
+        {
+            "type": "url",
+            "id": "btn1_link",
+            "label": "Button Link"
+        },
+        {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Text Color",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "btn_hover_color",
+            "label": "Text Color on Hover",
+            "default": "#000"
+        },
+        {
+            "type": "checkbox",
+            "id": "btn_back",
+            "label": "Button Background Hover Over",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "btn_back1",
+            "label": "Button Background Color1",
+            "default": "#ffffff"
+        },
+        {
+            "type": "color",
+            "id": "btn_back2",
+            "label": "Button Background Color2",
+            "default": "#ffffff"
+        },
+        {
+            "type": "checkbox",
+            "id": "btn_shadow",
+            "label": "Button Shadow Hover Over",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "btn_shadow1",
+            "label": "Button Shadow Color1",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "btn_shadow2",
+            "label": "Button Shadow Color2",
+            "default": "#000"
+        },
+		{
+            "type": "header",
+            "content": "Content Block Background"
+        },
+		{
+            "type": "color",
+            "id": "content_back",
+            "label": "Background Color",
+            "default": "#ffffff"
+        },
+		{
+            "type": "checkbox",
+            "id": "content_design",
+            "label": "Show Design for Block",
+            "default": true
+        },
+		{
+            "type": "color",
+            "id": "content_design1",
+            "label": "Color1",
+            "default": "#86d5d9"
+        },
+		{
+            "type": "color",
+            "id": "content_design2",
+            "label": "Color2",
+            "default": "#fab150"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Image with Text"
+        }
+    ]
+}
+{% endschema %}
+

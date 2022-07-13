@@ -1,0 +1,87 @@
+<section class="image-with-sale" id="image-with-sale-{{ section.id }}">
+  <div class="image with-sale-main">
+    <div class="sale-content">
+      {% if section.settings.subtext != blank %} 
+      <p class="subtext">
+        {{ section.settings.subtext }}
+      </p>
+      {% endif %}
+      
+      {% if section.settings.subtext != blank %} 
+      <p class="subtext">
+        {{ section.settings.subtext }}
+      </p>
+      {% endif %}
+      
+      {% if section.settings.sale != blank %} 
+      <div class="sale-block">
+        {% if section.settings.subtext != blank %} 
+        <h2 class="head">
+          {{ section.settings.head }}
+        </h2>
+        {% endif %}
+        <div class="sale">
+          <h1 class="sale-text">
+          </h1>
+          <div class="sale-per-block">
+            <h2 class="per">
+              %
+            </h2>
+            <h2 class="per-label">
+              off
+            </h2>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+         
+{% schema %}
+  {
+    "name": "Image with Sale",
+    "settings": [
+		{
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+        },
+		{
+            "type": "text",
+            "id": "subtext",
+            "label": "Subtext",
+            "default": "Subtext"
+        },
+		{
+            "type": "text",
+            "id": "head",
+            "label": "Heading",
+            "default": "Heading"
+        },
+		{
+            "type": "text",
+            "id": "per",
+            "label": "Percentage",
+            "default": "50"
+        },
+		{
+            "type": "text",
+            "id": "btn",
+            "label": "Button Label",
+			"default":"Button Label"
+        },
+        {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button Url"
+        }
+],
+"presets":[
+	{
+	"name":"Image with Sale"
+}
+]
+  }
+{% endschema %}
+

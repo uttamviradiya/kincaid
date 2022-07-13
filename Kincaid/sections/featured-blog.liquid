@@ -1,0 +1,117 @@
+<div class="featured_blog" data-section-id="{{ section.id }}">
+
+  {% if section.settings.heading != blank %}
+  <h2 class="text-center">{{ section.settings.heading | escape }}</h2>
+  {% endif %}
+
+  {% unless blogs[section.settings.blog].articles_count == 0 %}
+  <div class="row">
+    {% for article in blogs[section.settings.blog].articles limit: section.settings.post_limit %}
+    <div class="col-12">
+      <div class="featured-blog_post">
+        {% if section.settings.blog_show_image %}
+        {% unless article.image == blank %}
+        <a class="article_link" href="{{ article.url }}">
+          <figure>
+            <img class="article_image" src="{{ article.image | img_url: '300x300' }}" alt="{{ article.title | escape }}">
+          </figure>
+        </a>
+        {% endunless %}
+        {% endif %}
+        <h2 class="h3"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+        {% if section.settings.blog_show_date %}
+        <p class="featured-blog__meta txt--minor">
+          <time datetime="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">{{ article.published_at | date: format: 'date' }}</time>
+        </p>
+        {% endif %}
+        {% if section.settings.blog_show_date and section.settings.blog_show_author %}
+        <span class="meta__dot txt--minor" aria-hidden="true"></span>
+        {% endif %}
+        {% if section.settings.blog_show_author %}
+        <p class="featured-blog__meta txt--minor">{{ article.author }}</p>
+        {% endif %}
+        {% if section.settings.blog_show_excerpt %}
+        <div class="rte rte--indented-images">
+          {{ article.excerpt_or_content | strip_html | truncatewords: 30 }}
+        </div>
+        {% endif %}
+        <p class="read-more"><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endunless %}
+
+  {% if blog == empty %}
+  <div>No found</div>
+  {% endif %}
+
+  {% if section.settings.show_view_all %}
+  <div class="section-header text-center">
+    <a href="{{ blog.url }}" class="btn">{{ 'blogs.article.view_all' | t }}</a>
+  </div>
+  {% endif %}
+
+</div>
+
+
+{% schema %}
+{
+"name": "Blog posts",
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Blog"
+},
+{
+"id": "blog",
+"type": "blog",
+"label": "Blog"
+},
+{
+"type": "range",
+"id": "post_limit",
+"label": "Posts",
+"min": 1,
+"max": 3,
+"step": 1,
+"default": 3
+},
+{
+"type": "checkbox",
+"id": "blog_show_author",
+"label": "Show author",
+"default": false
+},
+{
+"type": "checkbox",
+"id": "blog_show_image",
+"label": "Show cover image",
+"default": false
+},
+{
+"type": "checkbox",
+"id": "blog_show_excerpt",
+"label": "Show excerpt",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "show_view_all",
+"label": "Show View all button",
+"default": false
+}
+],
+"presets": [
+{
+"name": "Blog posts",
+"category": "Blog",
+"settings": {
+"blog": "News"
+}
+}
+]
+}
+{% endschema %}

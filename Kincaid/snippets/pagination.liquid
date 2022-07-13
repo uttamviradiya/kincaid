@@ -1,0 +1,62 @@
+<style>
+  .pagination-list{display:flex;justify-content:center; margin:0 auto;max-width:500px;}
+  .pagination-list li {margin:0 10px;font-size:20px;}
+  .pagination-list li a{padding:0 10px;}
+  .pagination-list li .pagination-item.pagination-item-current{border-bottom:1px solid;}
+  
+  .pagination-list li .pagination-item.pagination-item-next{transform: rotate(-90deg);}
+  .pagination-list li .pagination-item.pagination-item-prev{transform: rotate(90deg);}
+  
+</style>
+
+{% comment %}
+    Renders a set of links for paginated results. Must be used within paginate tags.
+
+    Usage:
+    {% paginate results by 2 %}
+      {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+    {% endpaginate %}
+
+    Accepts:
+    - paginate: {Object}
+    - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+{% endcomment %}
+
+
+{%- if paginate.parts.size > 0 -%}
+  <div class="pagination-wrapper">
+    
+      <ul class="pagination-list" role="list">
+      
+        <li>
+          <a href="{{ paginate.previous.url }}{{ anchor }}" class="pagination-item pagination-item-prev" title="Previous" {%- unless paginate.previous -%} style="pointer-events: none" {% endunless %}>
+            {% render 'caret-icon' %}
+          </a>
+        </li>
+      
+
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}{{ anchor }}" class="pagination-item">{{ part.title }}</a>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <span class="pagination-item pagination-item-current" >{{ part.title }}</span>
+            {%- else -%}
+              <span class="pagination-item">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      
+        <li>
+          <a href="{{ paginate.next.url }}{{ anchor }}" class="pagination-item pagination-item-next" title="Next" {%- unless paginate.next -%} style="pointer-events: none" {% endunless %}>
+            {%- render 'caret-icon' -%}
+          </a>
+        </li>
+      
+      </ul>
+   
+  </div>
+{%- endif -%}

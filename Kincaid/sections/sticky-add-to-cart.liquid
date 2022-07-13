@@ -1,0 +1,244 @@
+<style>
+  .sticky-add-to-cart{position:fixed;bottom:0;width:100%;padding:8px 0;transform: translateY(250px);transition: 0.8s;}
+  .sticky-add-to-cart.sticky-active{transform:translateY(0);}
+  
+  .sticky-add-to-cart .sticky-a2c-main form{display:flex;align-items:center;max-width:1200px;margin:0 auto;justify-content:space-between;}
+  .sticky-add-to-cart .sticky-a2c-main form .sticky-form-group{display:flex;align-items:center;}
+  .sticky-add-to-cart .sticky-a2c-main figure{max-width:45px;margin-right:10px;}
+  .sticky-add-to-cart .sticky-a2c-main figure img{object-fit:contain;}
+  
+  .sticky-add-to-cart .sticky-a2c-main .sticky-a2c-title{max-width:450px;font-weight:500;}
+  
+  .sticky-add-to-cart .sticky-a2c-variant-selector select{padding: 7px;outline: 0;background: no-repeat;border: 1px solid grey;}
+  
+  .sticky-add-to-cart .sticky-a2c-qty-block,.sticky-add-to-cart .sticky-a2c-variant-selector {border: 1px solid;height: 40px;margin:0 5px}
+  .sticky-add-to-cart .sticky-a2c-qty-block{display:flex;}
+  
+  .sticky-add-to-cart .sticky-a2c-variant-selector select{border:none;}
+  
+  .sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-btn,.sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty{background:none;border:none;outline:none;padding:7px;width:30px;text-align:center;position:relative;}
+  .sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-btn::before{content: "";position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);background: #7b7b7b;width: 35%;height: 2px;}
+  .sticky-add-to-cart .sticky-a2c-qty-block .sticky-a2c-plus.sticky-qty-btn::after{content: "";position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);background: #7b7b7b;width: 2px;height: 28%;}
+  
+  .sticky-add-to-cart .sticky-a2c-btn-block .sticky-a2c-btn{margin:0;border:1px solid ;padding:10px 20px;transition:0.3s;}
+/*   .sticky-add-to-cart .sticky-a2c-btn-block .sticky-a2c-btn:hover{background:none;color:black;} */
+/*   .sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty{width:30px;} */
+  
+  @media(max-width:991px){
+    .sticky-add-to-cart .sticky-a2c-btn-block .sticky-a2c-btn{min-width:auto;padding:12px 20px;}
+  }
+  @media(max-width:767px){
+    .sticky-add-to-cart .sticky-a2c-main form .sticky-form-group.image-with-title{display:none;}
+    .sticky-add-to-cart .sticky-a2c-btn-block .sticky-a2c-btn{padding:12px 15px;}
+  }
+  @media(max-width:575px){
+    .sticky-add-to-cart .sticky-a2c-variant-selector select{max-width:150px;}
+    .sticky-add-to-cart .sticky-a2c-qty-block{display:none;}
+  }
+  
+  #sticky-add-to-cart-{{ section.id }}{background:{{ section.settings.back }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-main .sticky-a2c-title{color:{{ section.settings.text_color }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-variant-selector select{color:{{ section.settings.text_color }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-variant-selector select option{color:{{ section.settings.back }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-qty-block .sticky-qty-btn,#sticky-add-to-cart-{{ section.id }}  .sticky-a2c-qty-block .sticky-qty-qty{color:{{ section.settings.text_color }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-qty-block, #sticky-add-to-cart-{{ section.id }} .sticky-a2c-variant-selector{border-color:{{ section.settings.text_color | color_modify:"alpha", 0.30 }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-btn-block .sticky-a2c-btn{border-color:{{ section.settings.text_color }};background:{{ section.settings.text_color }};color:{{ section.settings.back }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-btn-block .sticky-a2c-btn:hover{background:{{ section.settings.back }};color:{{ section.settings.text_color }};}
+  #sticky-add-to-cart-{{ section.id }} .sticky-a2c-qty-block .sticky-qty-btn::before,#sticky-add-to-cart-{{ section.id }} .sticky-a2c-qty-block .sticky-a2c-plus.sticky-qty-btn::after{background:{{ section.settings.text_color }} }}}
+  {{ section.settings.css }}
+</style>
+
+<section class="sticky-add-to-cart {{ section.settings.class }}" {% unless product %}style="display:none !important"{% endunless %} data-json='{{ product | json }}' id="sticky-add-to-cart-{{ section.id }}">
+  <div class="container">
+    <div class="sticky-a2c-main">
+<!--       <form method='post'  id="form-sticky-{{ product.id }}"> -->
+       <form  method="post" class="qv-product-form" id="form-sticky" enctype="multipart/form-data"> 
+        <div class="sticky-form-group image-with-title">
+      <figure>
+        <img src="{{ product.selected_or_first_available_variant.featured_media.preview_image.src | img_url:"master" }}">
+      </figure>
+      <div class="sticky-a2c-title">
+      	{{ product.title }}  
+      </div>
+        </div>
+        <div class="sticky-form-group">
+      <div class="sticky-a2c-variant-selector">
+        <select name="id">
+          {% for variant in product.variants %}
+          {% if variant %}
+          <option data-img="{% if variant.featured_image != null %}{{ variant.featured_media.preview_image.src | img_url }}{% else %}{{ product.featured_image | img_url }}{% endif %}" value="{{ variant.id }}" >{{ variant.title }} - {{ variant.price | money }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+        
+        <div class="sticky-a2c-qty-block">
+          <button class="sticky-a2c-minus sticky-qty-btn">
+           
+          </button>
+          <input type="text" name="quantity" class="sticky-qty-qty" value="1">
+          <button class="sticky-a2c-plus sticky-qty-btn">
+           
+          </button>
+        </div>
+        </div>
+        <div class="sticky-form-group">
+          <div class="sticky-a2c-btn-block">
+          <input type="button" value="ADD TO CART" class="btn sticky-a2c-btn" >
+            
+            
+        </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  	let pro = $(".sticky-add-to-cart").data("json");
+  console.log(pro);
+//   let p = JSON.parse(pro);
+//   console.log(p);
+</script>
+
+{% schema %}
+{
+    "name": "Sticky Add to Cart",
+    "settings": [
+{
+"type":"color",
+"id":"back",
+"label":"Background Color",
+"default":"#ffffff"
+},
+{
+"type":"color",
+"id":"text_color",
+"label":"Text Color",
+"default":"#000000"
+},
+{
+"type":"header",
+"content":"Custom Css"
+},
+{
+"type":"text",
+"id":"class",
+"label":"ClassName"
+},
+{
+"type":"textarea",
+"id":"css",
+"label":"CSS"
+}
+
+],
+	"presets":[
+{
+	"name":"Sticky Add to Cart"
+}
+],
+"templates": ["product"]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+<script>
+  $(document).ready(function(){
+//     alert($(".product-single_cart-submit").scrollTop());
+    
+    
+    
+    
+    
+    let serial;
+    $(".sticky-add-to-cart .sticky-a2c-variant-selector select").change(function(){
+      let id = $(this).find(":selected").attr("data-id");
+      let img = $(this).find(":selected").attr("data-img");
+//       alert($(this).find(":selected").attr("data-id"));
+      $(".sticky-add-to-cart .sticky-a2c-main figure img").attr("src",img);
+      
+      serial = $(".sticky-add-to-cart .sticky-a2c-main form").serialize();
+      console.log(serial);
+    });
+    
+    $(".sticky-add-to-cart .sticky-a2c-variant-selector select").trigger("change");
+    
+    
+    
+//     quanity selector
+    $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-a2c-plus").click(function(e){
+      e.preventDefault();
+      
+      let qty = $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty").val();
+      qty++;
+      $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty").val(qty);
+//     	alert(qty);
+    });
+    
+    $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-a2c-minus").click(function(e){
+      e.preventDefault();
+      
+      let qty = $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty").val();
+      if(qty != 1)
+      {
+        qty--;
+        $(".sticky-add-to-cart .sticky-a2c-qty-block .sticky-qty-qty").val(qty);
+      }
+//     	alert(qty);
+    });
+    
+    
+//     add to cart click
+    $(".sticky-add-to-cart .sticky-a2c-btn-block .sticky-a2c-btn").click(function(){
+    	sticky_add_to_cart($(".sticky-add-to-cart .sticky-a2c-main form").attr("id"));
+      
+    });
+
+    function sticky_add_to_cart(form_id) {
+      alert($('#form-sticky').serialize());
+      $.ajax({
+        type: 'POST', 
+        url: '/cart/add.js',
+        dataType: 'json', 
+        data: $('#'+form_id).serialize(),
+        success: saddToCartOk,
+        error: saddToCartFail
+      });
+    }
+
+function saddToCartOk(product) { 
+  alert("true");
+} 
+
+function saddToCartFail(obj, status) { 
+  alert("false");
+  console.log(status);
+}
+    
+    
+    
+//     window scroll
+    var scrollTop     = $(window).scrollTop();
+    let elementOffset = $(".product-single_cart-submit").offset().top;
+    let distance      = (elementOffset - scrollTop) + 50;
+//     alert(elementOffset + " " + scrollTop);
+    $(window).scroll(function(){
+
+      if($(window).scrollTop() >= distance ) {
+//         $('.sticky-add-to-cart').fadeIn();
+        $('.sticky-add-to-cart').addClass("sticky-active");
+      }
+      else{
+//         $('.sticky-add-to-cart').fadeOut();
+        $('.sticky-add-to-cart').removeClass("sticky-active");
+      }
+    });
+
+  });
+
+</script>

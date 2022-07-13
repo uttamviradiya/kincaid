@@ -1,0 +1,35 @@
+     <div class="section-content">
+        {% if section.settings.sub_head != blank %}
+        <h5 class="sub-head">
+          {{ section.settings.sub_head }}
+        </h5>
+        {% endif %}
+        
+        {% if section.settings.head != blank %}
+        <h1 class="head">
+          {{ section.settings.head }}
+        </h1>
+        {% endif %}
+        
+        {% if section.settings.content != blank %}
+        <div class="content">
+          {{ section.settings.content }}
+        </div>
+        {% endif %}
+        
+        {% if section.settings.btn1 != blank and section.settings.btn1_link != blank or section.settings.btn2 != blank and section.settings.btn2_link != blank %}
+        <div class="section-content-btns">
+          {% if section.settings.btn1 != blank and section.settings.btn1_link != blank %}
+          <a class="btn" href="{{ section.settings.btn1_link }}">
+            {{ section.settings.btn1 }}
+          </a>
+          {% endif %}
+          
+          {% if section.settings.btn2 != blank and section.settings.btn2_link != blank %}
+          <a class="btn" href="{{ section.settings.btn2_link }}">
+            {{ section.settings.btn2 }}
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
